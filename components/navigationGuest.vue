@@ -1,5 +1,5 @@
 <script lang="ts">
-import { mixins } from 'nuxt-property-decorator'
+import { mixins, Component } from 'nuxt-property-decorator'
 import Mix from '~/mixins/mix'
 
 interface menuRules {
@@ -8,6 +8,7 @@ interface menuRules {
   to: string
 }
 
+@Component
 export default class NavigationGuest extends mixins(Mix) {
   drawer: boolean = false
   menu: Array<menuRules> = [
@@ -32,6 +33,10 @@ export default class NavigationGuest extends mixins(Mix) {
       to: '/login'
     }
   ]
+
+  showNotLastMenu (index: number) {
+    return index < this.menu.length - 1
+  }
 }
 </script>
 <template>
@@ -41,12 +46,17 @@ export default class NavigationGuest extends mixins(Mix) {
         <v-app-bar-nav-icon @click="drawer = true" />
       </div>
       <v-toolbar-title>
-        <!-- <img src="~/assets/logo.png" width="200"> -->
+        <img src="~/assets/logo.png" width="200">
       </v-toolbar-title>
+      <div v-for="(men, i) in menu" :key="i">
+        <v-btn text @click="men.to" v-if="showNotLastMenu(i)">
+          {{ men.title }}
+        </v-btn>
+      </div>
       <v-spacer />
       <div v-show="nosm">
-        <v-btn v-for="(men, i) in menu" :key="'men'+i" text @click="men.to">
-          {{ men.title }}
+        <v-btn text @click="menu[3].to">
+          {{ menu[3].title }}
         </v-btn>
         <v-btn
           depressed
