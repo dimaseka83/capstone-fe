@@ -4,6 +4,7 @@
     <v-main>
       <Nuxt />
     </v-main>
+    <!-- <footer-guest /> -->
   </v-app>
 </template>
 

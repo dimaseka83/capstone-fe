@@ -20,4 +20,12 @@ export default class Mix extends Vue {
   get sm () {
     return this.$vuetify.breakpoint.xs
   }
+
+  get width () {
+    return this.$vuetify.breakpoint.width
+  }
+
+  openMenu (menu: string) {
+    this.$router.push({ path: menu })
+  }
 }

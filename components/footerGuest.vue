@@ -1,0 +1,174 @@
+<script lang="ts">
+import { Component, mixins } from 'nuxt-property-decorator'
+import mix from '~/mixins/mix'
+
+interface socialMedia {
+  title: string
+  icon: string
+  to: string
+}
+
+interface menuRules {
+  title: string
+  icon: string
+  to: string
+}
+
+@Component
+export default class footerGuest extends mixins(mix) {
+  socialMedia: Array<socialMedia> = [
+    {
+      title: 'Facebook',
+      icon: 'mdi-facebook',
+      to: '#'
+    },
+    {
+      title: 'Instagram',
+      icon: 'mdi-instagram',
+      to: '#'
+    },
+    {
+      title: 'Twitter',
+      icon: 'mdi-twitter',
+      to: '#'
+    },
+    {
+      title: 'Youtube',
+      icon: 'mdi-youtube',
+      to: '#'
+    }
+  ]
+
+  menus: Array<menuRules> = [
+    {
+      title: 'Beranda',
+      icon: 'mdi-home',
+      to: '/'
+    },
+    {
+      title: 'Kalkulator',
+      icon: 'mdi-login',
+      to: '/login'
+    },
+    {
+      title: 'Berita',
+      icon: 'mdi-account-plus',
+      to: '/register'
+    },
+    {
+      title: 'Masuk',
+      icon: 'mdi-login',
+      to: '/login'
+    },
+    {
+      title: 'Registrasi',
+      icon: 'mdi-account-plus',
+      to: '/register'
+    }
+  ]
+
+  moreMe: Array<menuRules> = [
+    {
+      title: 'Tentang Kami',
+      icon: 'mdi-home',
+      to: '/'
+    },
+    {
+      title: 'Kontak Kami',
+      icon: 'mdi-login',
+      to: '/login'
+    },
+    {
+      title: 'Syarat & Ketentuan',
+      icon: 'mdi-account-plus',
+      to: '/register'
+    },
+    {
+      title: 'Kebijakan Privasi',
+      icon: 'mdi-login',
+      to: '/login'
+    },
+    {
+      title: 'Hubungi Kami',
+      icon: 'mdi-account-plus',
+      to: '/register'
+    }
+  ]
+
+  contactMe: Array<menuRules> = [
+    {
+      title: '0812-3456-7890',
+      icon: 'mdi-login',
+      to: '#'
+    },
+    {
+      title: 'halo@sikmen',
+      icon: 'mdi-home',
+      to: '#'
+    },
+    {
+      title: 'Jakarta Selatan',
+      icon: 'mdi-home',
+      to: '#'
+    }
+  ]
+
+  years: number = new Date().getFullYear()
+}
+</script>
+
+<template>
+  <v-content class="bg-pink">
+    <v-container class="my-8">
+      <v-row>
+        <v-col cols="4">
+          <img src="~/assets/footerlogo.png">
+          <p class="title text--disabled">
+            Sikmen adalah sistem perhitungan siklus mentruasi berbasis WEB
+          </p>
+
+          <p class="title font-weight-bold mt-10">
+            Follow Social Media Kami
+          </p>
+          <v-btn v-for="(sm, i) in socialMedia" :key="i" icon :href="sm.to" target="_blank">
+            <v-icon>{{ sm.icon }}</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col cols="6" class="ml-16 pl-16">
+          <v-row>
+            <v-col>
+              <p class="headline font-weight-bold">
+                Halaman
+              </p>
+              <p v-for="(menu, i) in menus" :key="i" class="title text--disabled" @click="openMenu(menu.to)">
+                {{ menu.title }}
+              </p>
+            </v-col>
+            <v-col>
+              <p class="headline font-weight-bold">
+                Lebih Dekat
+              </p>
+              <p v-for="(more, i) in moreMe" :key="i" class="title text--disabled" @click="openMenu(more.to)">
+                {{ more.title }}
+              </p>
+            </v-col>
+            <v-col>
+              <p class="headline font-weight-bold">
+                Kontak Kami
+              </p>
+              <p v-for="(contact, i) in contactMe" :key="i" class="title text--disabled" @click="openMenu(contact.to)">
+                {{ contact.title }}
+              </p>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-divider />
+    <div class="d-flex justify-center">
+      <p class="title text--disabled my-8">
+        Copyright © {{ years }} Tim Sikmen Dicoding. All rights reserved.
+      </p>
+    </div>
+  </v-content>
+</template>
