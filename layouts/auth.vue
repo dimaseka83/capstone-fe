@@ -13,7 +13,7 @@ export default class Login extends mixins(mix) {
       <v-col>
         <v-container>
           <div class="d-flex mb-10" :class="nosm ? 'flex-row-reverse' : 'flex-row mb-6'">
-            <img src="~/assets/logo.png" alt="" width="200">
+            <img src="~/assets/logo.png" @click="openMenu('/')" alt="" width="200">
           </div>
           <Nuxt />
           <div class="d-flex justify-center pink--text">
