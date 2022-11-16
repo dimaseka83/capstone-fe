@@ -112,8 +112,6 @@ export default class footerGuest extends mixins(mix) {
       to: '#'
     }
   ]
-
-  years: number = new Date().getFullYear()
 }
 </script>
 

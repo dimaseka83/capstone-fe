@@ -48,7 +48,7 @@ export default class NavigationGuest extends mixins(Mix) {
       </v-toolbar-title>
 
       <div v-for="(men, i) in menu" v-show="nosm" :key="i">
-        <v-btn v-if="showNotLastMenu(i)" text @click="men.to">
+        <v-btn v-if="showNotLastMenu(i)" text @click="openMenu(men.to)">
           {{ men.title }}
         </v-btn>
       </div>
@@ -56,7 +56,7 @@ export default class NavigationGuest extends mixins(Mix) {
       <v-spacer />
 
       <div v-show="nosm">
-        <v-btn text @click="menu[3].to">
+        <v-btn text @click="openMenu(menu[3].to)">
           {{ menu[3].title }}
         </v-btn>
         <v-btn
@@ -64,6 +64,7 @@ export default class NavigationGuest extends mixins(Mix) {
           color="pink"
           dark
           class="rounded-lg"
+          @click="openMenu('/register')"
         >
           Daftar Sekarang
         </v-btn>
@@ -76,7 +77,7 @@ export default class NavigationGuest extends mixins(Mix) {
             <v-list-item
               v-for="(men, i) in menu"
               :key="i"
-              @click="men.to"
+              @click="openMenu(men.to)"
             >
               <v-list-item-content>
                 <v-list-item-title>{{ men.title }}</v-list-item-title>
@@ -87,6 +88,7 @@ export default class NavigationGuest extends mixins(Mix) {
               color="pink"
               dark
               class="rounded-lg mt-8"
+              @click="openMenu('/register')"
             >
               Daftar Sekarang
             </v-btn>

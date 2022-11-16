@@ -27,5 +27,8 @@ export default class Mix extends Vue {
 
   openMenu (menu: string) {
     this.$router.push({ path: menu })
+    console.log('openMenu', menu)
   }
+
+  years: number = new Date().getFullYear()
 }
