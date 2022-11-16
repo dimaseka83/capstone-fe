@@ -121,7 +121,7 @@ export default class footerGuest extends mixins(mix) {
   <v-content class="bg-pink">
     <v-container class="my-8">
       <v-row>
-        <v-col cols="4">
+        <v-col :cols="nosm ? '4' : '12'">
           <img src="~/assets/footerlogo.png">
           <p class="title text--disabled">
             Sikmen adalah sistem perhitungan siklus mentruasi berbasis WEB
@@ -134,9 +134,9 @@ export default class footerGuest extends mixins(mix) {
             <v-icon>{{ sm.icon }}</v-icon>
           </v-btn>
         </v-col>
-        <v-col cols="6" class="ml-16 pl-16">
+        <v-col :cols="nosm ? '6' : '12'" :class="nosm ? 'ml-16 pl-16' : ''">
           <v-row>
-            <v-col>
+            <v-col :cols="nosm ? '' : '6'">
               <p class="headline font-weight-bold">
                 Halaman
               </p>
@@ -144,7 +144,7 @@ export default class footerGuest extends mixins(mix) {
                 {{ menu.title }}
               </p>
             </v-col>
-            <v-col>
+            <v-col :cols="nosm ? '' : '6'">
               <p class="headline font-weight-bold">
                 Lebih Dekat
               </p>
@@ -152,7 +152,7 @@ export default class footerGuest extends mixins(mix) {
                 {{ more.title }}
               </p>
             </v-col>
-            <v-col>
+            <v-col :cols="nosm ? '' : '6'">
               <p class="headline font-weight-bold">
                 Kontak Kami
               </p>

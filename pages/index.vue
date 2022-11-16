@@ -10,6 +10,7 @@ interface formBantuan {
 
 @Component
 export default class IndexPage extends mixins(mix) {
+  loading: boolean = false
   date: String = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
   menu1: Boolean = false
 
@@ -46,7 +47,7 @@ export default class IndexPage extends mixins(mix) {
       <v-row>
         <v-col v-show="sm">
           <v-card flat>
-            <img src="~/assets/womens-home.svg" :width="width - 150">
+            <img src="~/assets/womens-home.svg" :width="width">
           </v-card>
         </v-col>
         <v-col>
@@ -158,7 +159,14 @@ export default class IndexPage extends mixins(mix) {
     <v-container class="mt-16">
       <v-row>
         <v-col v-for="artikel in 3" :key="artikel" :cols="nosm ? '4' : '12'">
-          <v-card :height="height" width="500">
+          <v-card :height="nosm ? height : ''" :loading="loading">
+            <template slot="progress">
+              <v-progress-linear
+                color="deep-purple"
+                height="10"
+                indeterminate
+              />
+            </template>
             <v-img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
             <v-card-text class="pa-10 black--text">
               <h1 class=" headline font-weight-medium">
@@ -211,7 +219,10 @@ export default class IndexPage extends mixins(mix) {
 
     <v-container class="fill-height my-16">
       <v-row>
-        <v-col cols="6">
+        <v-col v-show="sm">
+          <img src="~/assets/message-home.svg" :width="width">
+        </v-col>
+        <v-col :cols="nosm ? '6' : '12'">
           <h1 class="font-weight-bold display-2">
             Bantuan Lebih Lanjut
           </h1>
@@ -233,8 +244,11 @@ export default class IndexPage extends mixins(mix) {
             label="Pesan"
             outlined
           />
+          <v-btn color="pink" large class="px-5 rounded-lg" dark>
+            Kirim
+          </v-btn>
         </v-col>
-        <v-col>
+        <v-col v-show="nosm">
           <img src="~/assets/message-home.svg">
         </v-col>
       </v-row>
