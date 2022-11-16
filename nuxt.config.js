@@ -6,8 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - capstone-fe',
-    title: 'capstone-fe',
+    title: 'SIKMEN',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -57,8 +56,17 @@ export default {
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
+    meta: {
+      title: 'SIKMEN',
+      author: 'Team SIKMEN - Capstone Project Dicoding x Kampus Merdeka'
+    },
     manifest: {
-      lang: 'en'
+      lang: 'en',
+      name: 'SIKMEN',
+      short_name: 'SIKMEN'
+    },
+    icon: {
+      source: 'static/icon.png'
     }
   },
 
