@@ -20,17 +20,17 @@ export default class NavigationGuest extends mixins(Mix) {
     {
       title: 'Kalkulator',
       icon: 'mdi-login',
-      to: '/login'
+      to: '#'
     },
     {
       title: 'Berita',
       icon: 'mdi-account-plus',
-      to: '/register'
+      to: '#'
     },
     {
       title: 'Masuk',
       icon: 'mdi-login',
-      to: '/login'
+      to: '/auth/login'
     }
   ]
 
@@ -64,7 +64,7 @@ export default class NavigationGuest extends mixins(Mix) {
           color="pink"
           dark
           class="rounded-lg"
-          @click="openMenu('/register')"
+          @click="openMenu('/auth/register')"
         >
           Daftar Sekarang
         </v-btn>
@@ -88,7 +88,7 @@ export default class NavigationGuest extends mixins(Mix) {
               color="pink"
               dark
               class="rounded-lg mt-8"
-              @click="openMenu('/register')"
+              @click="openMenu('/auth/register')"
             >
               Daftar Sekarang
             </v-btn>

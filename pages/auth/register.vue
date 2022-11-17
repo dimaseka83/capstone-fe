@@ -172,7 +172,7 @@ export default class RegisterLayout extends mixins(mix) {
     <div class="d-flex justify-center">
       <p class="mt-10 font-weight-light">
         Sudah memiliki akun?
-        <nuxt-link to="/login" class="pink--text">
+        <nuxt-link to="/auth/login" class="pink--text">
           Masuk
         </nuxt-link>
       </p>

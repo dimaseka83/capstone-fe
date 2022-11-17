@@ -87,7 +87,7 @@ export default class Login extends mixins(mix) {
     <div class="d-flex justify-center">
       <p class="mt-10 font-weight-light">
         Belum punya akun? Silahkan
-        <nuxt-link to="/register" class="pink--text">
+        <nuxt-link to="/auth/register" class="pink--text">
           Daftar disini
         </nuxt-link>
       </p>
