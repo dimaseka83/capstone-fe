@@ -61,10 +61,12 @@ export default class IndexPage extends mixins(mix) {
             <p class="text--disabled" :class="nosm ? 'body' : 'body-2'">
               Cek siklus menstruasi kamu dan simpan hasilnya.
             </p>
-            <v-btn v-if="nosm" color="pink" x-large class="px-5 rounded-lg" dark>
-              Daftar Sekarang
-            </v-btn>
-            <v-btn v-else color="pink" class="px-5 rounded-lg" dark>
+            <v-row v-if="nosm" class="ml-1">
+              <v-btn  @click="openMenu('/auth/register')" color="pink" x-large class="px-5 rounded-lg" dark>
+                Daftar Sekarang
+              </v-btn>
+            </v-row>
+            <v-btn  @click="openMenu('/auth/register')" v-else color="pink" class="px-5 rounded-lg" dark>
               Daftar Sekarang
             </v-btn>
           </v-container>
