@@ -1,11 +1,20 @@
-import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
+import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 
-@Module({ name: 'calcPeriod', namespaced: true })
-export default class CalcPeriod extends VuexModule {
+@Module({ name: 'index', namespaced: true, stateFactory: true })
+export default class Index extends VuexModule {
+  public date: String = ''
   public period: number = 0
+  public cycle: number = 0
 
   @Mutation
-  public setPeriod (period: number) {
+  public setMenstruation (period: number, cycle: number, date: String) {
     this.period = period
+    this.cycle = cycle
+    this.date = date
+  }
+
+  @Action
+  public setMenstruationAction (period: number, cycle: number, date: String) {
+    this.setMenstruation(period, cycle, date)
   }
 }

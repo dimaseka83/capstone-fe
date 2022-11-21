@@ -1,8 +1,9 @@
 <!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script lang="ts">
 import { mixins, Component } from 'nuxt-property-decorator'
+import { getModule } from 'vuex-module-decorators'
 import mix from '~/mixins/mix'
-import CalcPeriod from '~/store'
+import Index from '~/store/index'
 
 interface formBantuan {
   nama: string
@@ -39,6 +40,13 @@ export default class IndexPage extends mixins(mix) {
 
   haidIn () {
     this.haidCount = (this.haidCount + 7) || 0
+  }
+
+  calcNow () {
+    this.loading = true
+    const calcPeriod = getModule(Index, this.$store)
+    calcPeriod.setMenstruationAction(this.haidCount, this.siklusCount, this.date)
+    // this.$router.push('/hasil')
   }
 }
 
@@ -143,10 +151,17 @@ export default class IndexPage extends mixins(mix) {
           </v-col>
         </v-row>
         <div class="d-flex justify-center">
-          <v-btn v-if="nosm" color="pink" large class="px-5 rounded-lg" dark>
+          <v-btn
+            v-if="nosm"
+            color="pink"
+            large
+            class="px-5 rounded-lg"
+            dark
+            @click="calcNow"
+          >
             Hitung Sekarang
           </v-btn>
-          <v-btn v-else color="pink" class="px-5 rounded-lg" dark>
+          <v-btn v-else color="pink" class="px-5 rounded-lg" dark @click="calcNow">
             Hitung Sekarang
           </v-btn>
         </div>
