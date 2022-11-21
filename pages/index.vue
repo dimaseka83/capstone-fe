@@ -1,6 +1,8 @@
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script lang="ts">
 import { mixins, Component } from 'nuxt-property-decorator'
 import mix from '~/mixins/mix'
+import CalcPeriod from '~/store'
 
 interface formBantuan {
   nama: string
@@ -47,7 +49,7 @@ export default class IndexPage extends mixins(mix) {
       <v-row>
         <v-col v-show="sm">
           <v-card flat>
-            <img src="~/assets/womens-home.svg" :width="width">
+            <img src="~/assets/womens-home.svg" :width="width-10">
           </v-card>
         </v-col>
         <v-col>
@@ -62,11 +64,11 @@ export default class IndexPage extends mixins(mix) {
               Cek siklus menstruasi kamu dan simpan hasilnya.
             </p>
             <v-row v-if="nosm" class="ml-1">
-              <v-btn  @click="openMenu('/auth/register')" color="pink" x-large class="px-5 rounded-lg" dark>
+              <v-btn color="pink" x-large class="px-5 rounded-lg" dark @click="openMenu('/auth/register')">
                 Daftar Sekarang
               </v-btn>
             </v-row>
-            <v-btn  @click="openMenu('/auth/register')" v-else color="pink" class="px-5 rounded-lg" dark>
+            <v-btn v-else color="pink" class="px-5 rounded-lg" dark @click="openMenu('/auth/register')">
               Daftar Sekarang
             </v-btn>
           </v-container>
@@ -222,7 +224,7 @@ export default class IndexPage extends mixins(mix) {
     <v-container class="fill-height my-16">
       <v-row>
         <v-col v-show="sm">
-          <img src="~/assets/message-home.svg" :width="width">
+          <img src="~/assets/message-home.svg" :width="width-10">
         </v-col>
         <v-col :cols="nosm ? '6' : '12'">
           <h1 class="font-weight-bold display-2">

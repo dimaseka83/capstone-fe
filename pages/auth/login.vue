@@ -69,7 +69,7 @@ export default class Login extends mixins(mix) {
           text
           color="pink"
           class="my-1"
-           @click="openMenu('/auth/lupapassword')"
+          @click="openMenu('/auth/lupapassword')"
         >
           Lupa password?
         </v-btn>

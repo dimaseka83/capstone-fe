@@ -3,6 +3,10 @@ import { Component } from 'nuxt-property-decorator'
 
 @Component
 export default class Mix extends Vue {
+  limitText (text: string, limit: number) {
+    return text.length > limit ? text.substring(0, limit) + '...' : text
+  }
+
   get height () {
     switch (this.$vuetify.breakpoint.name) {
       case 'xs': return 220
