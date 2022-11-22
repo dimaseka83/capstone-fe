@@ -16,20 +16,6 @@ export default class HasilSiklus extends mixins(mix) {
     '4day': '4 Hari'
   }
 
-  events = [{
-    color: 'blue',
-    name: 'Meeting',
-    start: '2022-11-01',
-    end: '2022-11-02',
-    timed: true
-  }, {
-    color: 'red',
-    name: 'Meeting',
-    start: '2022-11-10',
-    end: '2022-11-12',
-    timed: true
-  }]
-
   setToday () {
     this.focus = ''
   }
@@ -74,8 +60,8 @@ export default class HasilSiklus extends mixins(mix) {
       firstDate = splitFirstDate[2]
       lastDate = splitLastDate[2] + ' ' + this.monthName(splitLastDate[1])
     } else {
-      firstDate = splitFirstDate[2] + '-' + splitFirstDate[1]
-      lastDate = splitLastDate[2] + '-' + splitLastDate[1]
+      firstDate = splitFirstDate[2] + '-' + this.monthName(splitFirstDate[1])
+      lastDate = splitLastDate[2] + '-' + this.monthName(splitLastDate[1])
     }
     return firstDate + ' - ' + lastDate
   }
@@ -266,7 +252,7 @@ export default class HasilSiklus extends mixins(mix) {
                   </v-menu>
                 </v-toolbar>
               </v-sheet>
-              <v-sheet :height="height">
+              <v-sheet :height="nosm ? height : height*2">
                 <v-calendar
                   ref="calendar"
                   v-model="focus"

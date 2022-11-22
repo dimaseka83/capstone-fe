@@ -20,7 +20,7 @@ export default class IndexPage extends mixins(mix) {
   date: string = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
   menu1: Boolean = false
 
-  siklusCount: number = 26
+  siklusCount: number = 21
   haidCount: number = 2
 
   formBantuan: formBantuan = {
@@ -192,8 +192,8 @@ export default class IndexPage extends mixins(mix) {
               prepend-icon="mdi-minus"
               thumb-color="pink"
               thumb-label
-              :min="26"
-              :max="36"
+              :min="21"
+              :max="42"
               @click:append="siklusIn"
               @click:prepend="siklusOut"
             />
@@ -208,7 +208,7 @@ export default class IndexPage extends mixins(mix) {
               thumb-color="pink"
               thumb-label
               :min="2"
-              :max="9"
+              :max="14"
               @click:append="haidIn"
               @click:prepend="haidOut"
             />
