@@ -12,6 +12,12 @@ export const mutations = {
   setHaid (state: { haid: any, period: any }, payload: any) {
     state.haid = payload.haid,
     state.period = payload.siklus
+  },
+
+  resetPerhitungan (state: { hasilPerhitungan: any, haid: any, period: any }) {
+    state.hasilPerhitungan = []
+    state.haid = null
+    state.period = null
   }
 }
 
@@ -22,5 +28,9 @@ export const actions = {
 
   getHaid ({ commit }: any, payload: any) {
     commit('setHaid', payload)
+  },
+
+  resetPerhitungan ({ commit }: any) {
+    commit('resetPerhitungan')
   }
 }

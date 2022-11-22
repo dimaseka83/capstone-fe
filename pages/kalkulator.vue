@@ -4,30 +4,11 @@ import {
   mixins
 } from 'nuxt-property-decorator'
 import mix from '~/mixins/mix'
+import mixperiod from '~/mixins/mixperiod'
 
   @Component
-export default class Kalkulator extends mixins(mix) {
-  date: String = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
-  menu1: Boolean = false
+export default class Kalkulator extends mixins(mix, mixperiod) {
 
-  siklusCount: number = 0
-  haidCount: number = 0
-
-  siklusOut () {
-    this.siklusCount = (this.siklusCount - 7) || 0
-  }
-
-  siklusIn () {
-    this.siklusCount = (this.siklusCount + 7) || 0
-  }
-
-  haidOut () {
-    this.haidCount = (this.haidCount - 7) || 0
-  }
-
-  haidIn () {
-    this.haidCount = (this.haidCount + 7) || 0
-  }
 }
 
 </script>
@@ -95,6 +76,8 @@ export default class Kalkulator extends mixins(mix) {
             prepend-icon="mdi-minus"
             thumb-color="pink"
             thumb-label
+            :min="21"
+            :max="42"
             @click:append="siklusIn"
             @click:prepend="siklusOut"
           />
@@ -108,16 +91,25 @@ export default class Kalkulator extends mixins(mix) {
             prepend-icon="mdi-minus"
             thumb-color="pink"
             thumb-label
+            :min="2"
+            :max="14"
             @click:append="haidIn"
             @click:prepend="haidOut"
           />
         </v-col>
       </v-row>
       <div class="d-flex" :class="nosm ? 'justify-end' : 'justify-start'">
-        <v-btn v-if="nosm" color="pink" large class="px-5 rounded-lg" dark>
+        <v-btn
+          v-if="nosm"
+          color="pink"
+          large
+          class="px-5 rounded-lg"
+          dark
+          @click="calcNow"
+        >
           Hitung Sekarang
         </v-btn>
-        <v-btn v-else color="pink" class="px-5 rounded-lg" dark>
+        <v-btn v-else color="pink" class="px-5 rounded-lg" dark @click="calcNow">
           Hitung Sekarang
         </v-btn>
       </div>
