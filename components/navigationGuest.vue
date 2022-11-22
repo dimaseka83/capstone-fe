@@ -20,12 +20,12 @@ export default class NavigationGuest extends mixins(Mix) {
     {
       title: 'Kalkulator',
       icon: 'mdi-login',
-      to: '#'
+      to: '/kalkulator'
     },
     {
       title: 'Berita',
       icon: 'mdi-account-plus',
-      to: '#'
+      to: '/berita'
     },
     {
       title: 'Masuk',

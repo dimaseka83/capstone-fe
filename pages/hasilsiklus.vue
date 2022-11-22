@@ -1,10 +1,84 @@
 <script lang="ts">
-import { Component, mixins } from 'nuxt-property-decorator'
+import { Component, mixins, Ref } from 'nuxt-property-decorator'
+import moment from 'moment'
 import mix from '~/mixins/mix'
 
 @Component
 export default class HasilSiklus extends mixins(mix) {
+  @Ref('calendar') calendar: any
   dialog:boolean = false
+  focus: string = ''
+  type = 'month'
+  typeToLabel = {
+    month: 'Bulan',
+    week: 'Minggu',
+    day: 'Hari',
+    '4day': '4 Hari'
+  }
+
+  events = [{
+    color: 'blue',
+    name: 'Meeting',
+    start: '2022-11-01',
+    end: '2022-11-02',
+    timed: true
+  }, {
+    color: 'red',
+    name: 'Meeting',
+    start: '2022-11-10',
+    end: '2022-11-12',
+    timed: true
+  }]
+
+  setToday () {
+    this.focus = ''
+  }
+
+  prev () {
+    this.calendar.prev()
+  }
+
+  next () {
+    this.calendar.next()
+  }
+
+  getEventColor (event: { color: any }) {
+    if (event.color) {
+      return event.color
+    }
+  }
+
+  monthName (date: string) {
+    return moment(date).format('MMMM')
+  }
+
+  moment (date: string) {
+    return moment(date)
+  }
+
+  calcBetweenDates (start: string, end: string) {
+    const startDate = new Date(start)
+    const endDate = new Date(end)
+    const dates = []
+    while (startDate <= endDate) {
+      dates.push(moment(startDate).format('YYYY-MM-DD'))
+      startDate.setDate(startDate.getDate() + 1)
+    }
+    let firstDate = dates[0]
+    let lastDate = dates[dates.length - 1]
+    const splitFirstDate = firstDate.split('-')
+    const splitLastDate = lastDate.split('-')
+    const firstDateMonth = splitFirstDate[1]
+    const lastDateMonth = splitLastDate[1]
+    if (firstDateMonth === lastDateMonth) {
+      firstDate = splitFirstDate[2]
+      lastDate = splitLastDate[2] + ' ' + this.monthName(splitLastDate[1])
+    } else {
+      firstDate = splitFirstDate[2] + '-' + splitFirstDate[1]
+      lastDate = splitLastDate[2] + '-' + splitLastDate[1]
+    }
+    return firstDate + ' - ' + lastDate
+  }
 }
 </script>
 <template>
@@ -41,7 +115,7 @@ export default class HasilSiklus extends mixins(mix) {
                     Haid
                   </v-btn>
                   <p class="font-weight-bold mt-5" :class="nosm ? 'caption' : 'body-1'">
-                    10 Hari, Siklus 8 hari
+                    {{ $store.state.calc.haid }} Hari, Siklus {{ $store.state.calc.period }} hari
                   </p>
                 </v-col>
               </v-row>
@@ -60,7 +134,7 @@ export default class HasilSiklus extends mixins(mix) {
                     Masa Subur
                   </v-btn>
                   <p class="font-weight-bold mt-5" :class="nosm ? 'caption' : 'body-1'">
-                    02 - 11 November
+                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[1].start, $store.state.calc.hasilPerhitungan[1].end) }}
                   </p>
                 </v-col>
               </v-row>
@@ -81,7 +155,7 @@ export default class HasilSiklus extends mixins(mix) {
                     Tidak Subur
                   </v-btn>
                   <p class="font-weight-bold mt-5" :class="nosm ? 'caption' : 'body-1'">
-                    18 - 28 November
+                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[0].start, $store.state.calc.hasilPerhitungan[0].end) }}
                   </p>
                 </v-col>
               </v-row>
@@ -100,7 +174,7 @@ export default class HasilSiklus extends mixins(mix) {
                     Ovulasi
                   </v-btn>
                   <p class="font-weight-bold mt-5" :class="nosm ? 'caption' : 'body-1'">
-                    12 - 17 November
+                    {{ moment($store.state.calc.hasilPerhitungan[2].start).format('DD MMMM') }}
                   </p>
                 </v-col>
               </v-row>
@@ -124,7 +198,87 @@ export default class HasilSiklus extends mixins(mix) {
             </v-btn>
           </div>
         </v-col>
-        <v-col :cols="nosm ? '6' : '12'" />
+        <v-col :cols="nosm ? '6' : '12'">
+          <v-row>
+            <v-col>
+              <v-sheet>
+                <v-toolbar flat>
+                  <v-btn
+                    outlined
+                    class="mr-4"
+                    color="grey darken-2"
+                    @click="setToday"
+                  >
+                    Today
+                  </v-btn>
+                  <v-btn
+                    fab
+                    text
+                    small
+                    color="grey darken-2"
+                    @click="prev"
+                  >
+                    <v-icon small>
+                      mdi-chevron-left
+                    </v-icon>
+                  </v-btn>
+                  <v-btn
+                    fab
+                    text
+                    small
+                    color="grey darken-2"
+                    @click="next"
+                  >
+                    <v-icon small>
+                      mdi-chevron-right
+                    </v-icon>
+                  </v-btn>
+                  <v-toolbar-title v-if="calendar">
+                    {{ calendar.title }}
+                  </v-toolbar-title>
+                  <v-spacer />
+                  <v-menu
+                    bottom
+                    right
+                  >
+                    <template #activator="{ on, attrs }">
+                      <v-btn
+                        color="grey darken-2"
+                        dark
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        <span>{{ typeToLabel[type] }}</span>
+                        <v-icon right>
+                          mdi-menu-down
+                        </v-icon>
+                      </v-btn>
+                    </template>
+                    <v-list>
+                      <v-list-item
+                        v-for="(item, i) in Object.keys(typeToLabel)"
+                        :key="i"
+                        @click="type = item"
+                      >
+                        <v-list-item-title>{{ typeToLabel[item] }}</v-list-item-title>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
+                </v-toolbar>
+              </v-sheet>
+              <v-sheet :height="height">
+                <v-calendar
+                  ref="calendar"
+                  v-model="focus"
+                  color="primary"
+                  :events="$store.state.calc.hasilPerhitungan"
+                  :event-color="getEventColor"
+                  :type="type"
+                />
+              </v-sheet>
+            </v-col>
+          </v-row>
+        </v-col>
       </v-row>
     </v-container>
 
@@ -134,8 +288,12 @@ export default class HasilSiklus extends mixins(mix) {
           <p class="font-weight-bold display-1 black--text mb-10">
             Daftar terlebih dahulu untuk menyimpan hasil siklus haid
           </p>
-          <v-btn outlined color="pink" class="rounded-lg" @click="dialog = false">Batal</v-btn>
-          <v-btn color="pink" dark class="rounded-lg" @click="openMenu('/auth/register')">Daftar</v-btn>
+          <v-btn outlined color="pink" class="rounded-lg" @click="dialog = false">
+            Batal
+          </v-btn>
+          <v-btn color="pink" dark class="rounded-lg" @click="openMenu('/auth/register')">
+            Daftar
+          </v-btn>
         </v-card-text>
       </v-card>
     </v-dialog>

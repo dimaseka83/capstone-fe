@@ -29,9 +29,12 @@ export default class Mix extends Vue {
     return this.$vuetify.breakpoint.width
   }
 
+  get max () {
+    return new Date().toISOString().substr(0, 10)
+  }
+
   openMenu (menu: string) {
     this.$router.push({ path: menu })
-    console.log('openMenu', menu)
   }
 
   years: number = new Date().getFullYear()

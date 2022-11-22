@@ -81,6 +81,7 @@ export default class Kalkulator extends mixins(mix) {
             <v-date-picker
               v-model="date"
               no-title
+              :max="max"
               @input="menu1 = false"
             />
           </v-menu>
