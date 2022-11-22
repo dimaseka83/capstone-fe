@@ -111,16 +111,16 @@ export default class HasilSiklus extends mixins(mix) {
                 <v-col>
                   <v-card class="pa-5 rounded-xl" outlined width="100">
                     <div class="d-flex justify-center">
-                      <img src="~/assets/hasilsiklus/fertz.png" alt="">
+                      <img src="~/assets/hasilsiklus/ovum.png" alt="">
                     </div>
                   </v-card>
                 </v-col>
                 <v-col>
-                  <v-btn color="green" dark class="rounded-lg font-weight-light">
-                    Masa Subur
+                  <v-btn color="purple" dark class="rounded-lg font-weight-light">
+                    Tidak Subur
                   </v-btn>
                   <p class="font-weight-bold mt-5" :class="nosm ? 'caption' : 'body-1'">
-                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[1].start, $store.state.calc.hasilPerhitungan[1].end) }}
+                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[0].start, $store.state.calc.hasilPerhitungan[0].end) }}
                   </p>
                 </v-col>
               </v-row>
@@ -132,16 +132,16 @@ export default class HasilSiklus extends mixins(mix) {
                 <v-col>
                   <v-card class="pa-5 rounded-xl" outlined width="100">
                     <div class="d-flex justify-center">
-                      <img src="~/assets/hasilsiklus/ovum.png" alt="">
+                      <img src="~/assets/hasilsiklus/fertz.png" alt="">
                     </div>
                   </v-card>
                 </v-col>
                 <v-col>
-                  <v-btn color="purple" dark class="rounded-lg font-weight-light">
-                    Tidak Subur
+                  <v-btn color="green" dark class="rounded-lg font-weight-light">
+                    Masa Subur
                   </v-btn>
                   <p class="font-weight-bold mt-5" :class="nosm ? 'caption' : 'body-1'">
-                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[0].start, $store.state.calc.hasilPerhitungan[0].end) }}
+                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[1].start, $store.state.calc.hasilPerhitungan[1].end) }}
                   </p>
                 </v-col>
               </v-row>
