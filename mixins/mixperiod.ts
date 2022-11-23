@@ -67,7 +67,7 @@ export default class MixPeriod extends Vue {
         const fertilePhaseStartDate = addDays(proliferativeEnd, 1)
         const fertilePhaseEndDate = addDays(fertilePhaseStartDate, weekCycleFertile)
         const ovulationDayStart = addDays(proliferativeEnd, 7)
-        const ovulationDayEnd = addDays(ovulationDayStart, 3)
+        const ovulationDayEnd = addDays(ovulationDayStart, 2)
 
         events.push({
           name: 'Haid',
