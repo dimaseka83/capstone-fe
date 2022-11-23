@@ -39,9 +39,6 @@ export default class MixPeriod extends Vue {
     this.resetPerhitungan()
     const periodCycleDays = this.siklusCount
     const bleedingDays = this.haidCount
-    const fertilePhaseStart = periodCycleDays - 20
-    const fertilePhaseEnd = periodCycleDays - 11
-    const ovulation = (fertilePhaseStart - 1) + (fertilePhaseEnd - fertilePhaseStart) / 2
 
     const periodStartDate = new Date(this.date)
 
