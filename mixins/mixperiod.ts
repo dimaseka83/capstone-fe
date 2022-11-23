@@ -52,11 +52,15 @@ export default class MixPeriod extends Vue {
     }
 
     const createEventsForDate = (date: Date) => {
+      const timeBetween = Math.abs(date.getTime() - periodStartDate.getTime())
+      const daysBetween = Math.ceil(timeBetween / (1000 * 3600 * 24))
+      const cyclesBetween = Math.floor(daysBetween / periodCycleDays)
       const weekCycleFertile = Math.floor(periodCycleDays - 7)
       const events = []
 
       for (let i = 0; i < 1; i++) {
-        const p = addDays(periodStartDate, 0)
+        const cycyleDaysBetween = periodCycleDays * (cyclesBetween)
+        const p = addDays(periodStartDate, cycyleDaysBetween)
         const bleedingEnd = addDays(p, bleedingDays)
         const proliferativeStart = addDays(bleedingEnd, 1)
         const proliferativeEnd = addDays(proliferativeStart, 7)
