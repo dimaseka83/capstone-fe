@@ -178,7 +178,7 @@ export default class HasilSiklus extends mixins(mix) {
             </p>
           </v-card>
           <div class="mt-10">
-            <v-btn outlined color="pink" class="rounded-lg">
+            <v-btn outlined color="pink" class="rounded-lg" @click="openMenu('/kalkulator')">
               Tes ulang
             </v-btn>
             <v-btn color="pink" dark class="rounded-lg" @click="dialog = true">
