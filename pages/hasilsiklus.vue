@@ -101,7 +101,8 @@ export default class HasilSiklus extends mixins(mix) {
                     Haid
                   </v-btn>
                   <p class="font-weight-bold mt-5" :class="nosm ? 'caption' : 'body-1'">
-                    {{ $store.state.calc.haid }} Hari, Siklus {{ $store.state.calc.period }} hari
+                    <!-- {{ $store.state.calc.haid }} Hari, Siklus {{ $store.state.calc.period }} hari -->
+                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[0].start, $store.state.calc.hasilPerhitungan[0].end) }}
                   </p>
                 </v-col>
               </v-row>
@@ -120,7 +121,7 @@ export default class HasilSiklus extends mixins(mix) {
                     Masa Subur
                   </v-btn>
                   <p class="font-weight-bold mt-5" :class="nosm ? 'caption' : 'body-1'">
-                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[1].start, $store.state.calc.hasilPerhitungan[1].end) }}
+                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[2].start, $store.state.calc.hasilPerhitungan[2].end) }}
                   </p>
                 </v-col>
               </v-row>
@@ -141,7 +142,7 @@ export default class HasilSiklus extends mixins(mix) {
                     Tidak Subur
                   </v-btn>
                   <p class="font-weight-bold mt-5" :class="nosm ? 'caption' : 'body-1'">
-                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[0].start, $store.state.calc.hasilPerhitungan[0].end) }}
+                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[1].start, $store.state.calc.hasilPerhitungan[1].end) }}
                   </p>
                 </v-col>
               </v-row>
@@ -160,7 +161,7 @@ export default class HasilSiklus extends mixins(mix) {
                     Ovulasi
                   </v-btn>
                   <p class="font-weight-bold mt-5" :class="nosm ? 'caption' : 'body-1'">
-                    {{ moment($store.state.calc.hasilPerhitungan[2].start).format('DD MMMM') }}
+                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[3].start, $store.state.calc.hasilPerhitungan[3].end) }}
                   </p>
                 </v-col>
               </v-row>

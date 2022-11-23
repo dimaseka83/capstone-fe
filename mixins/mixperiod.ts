@@ -55,22 +55,32 @@ export default class MixPeriod extends Vue {
       const timeBetween = Math.abs(date.getTime() - periodStartDate.getTime())
       const daysBetween = Math.ceil(timeBetween / (1000 * 3600 * 24))
       const cyclesBetween = Math.floor(daysBetween / periodCycleDays)
+      const weekCycleFertile = Math.floor(periodCycleDays - 7)
       const events = []
 
       for (let i = 0; i < 1; i++) {
-        const cycyleDaysBetween = periodCycleDays * (cyclesBetween + i)
+        const cycyleDaysBetween = periodCycleDays * (cyclesBetween)
         const p = addDays(periodStartDate, cycyleDaysBetween)
         const bleedingEnd = addDays(p, bleedingDays)
-        const fertilePhaseStartDate = addDays(p, fertilePhaseStart)
-        const fertilePhaseEndDate = addDays(p, fertilePhaseEnd)
-        const ovulationDayStart = addDays(p, ovulation)
-        const ovulationDayEnd = new Date(new Date(ovulationDayStart).setHours(23, 59, 59, 999))
+        const proliferativeStart = addDays(bleedingEnd, 1)
+        const proliferativeEnd = addDays(proliferativeStart, 7)
+        const fertilePhaseStartDate = addDays(proliferativeEnd, 1)
+        const fertilePhaseEndDate = addDays(fertilePhaseStartDate, weekCycleFertile)
+        const ovulationDayStart = addDays(proliferativeEnd, 7)
+        const ovulationDayEnd = addDays(ovulationDayStart, 3)
 
         events.push({
           name: 'Haid',
           start: moment(p).format('YYYY-MM-DD'),
           end: moment(bleedingEnd).format('YYYY-MM-DD'),
           color: 'red',
+          timed: true
+        })
+        events.push({
+          name: 'Fase Tidak Subur',
+          start: moment(proliferativeStart).format('YYYY-MM-DD'),
+          end: moment(proliferativeEnd).format('YYYY-MM-DD'),
+          color: 'purple',
           timed: true
         })
         events.push({
