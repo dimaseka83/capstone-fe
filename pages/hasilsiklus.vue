@@ -107,27 +107,7 @@ export default class HasilSiklus extends mixins(mix) {
                 </v-col>
               </v-row>
             </v-col>
-            <v-col :cols="nosm ? '6' : '12'">
-              <v-row>
-                <v-col>
-                  <v-card class="pa-5 rounded-xl" outlined width="100">
-                    <div class="d-flex justify-center">
-                      <img src="~/assets/hasilsiklus/fertz.png" alt="">
-                    </div>
-                  </v-card>
-                </v-col>
-                <v-col>
-                  <v-btn color="green" dark class="rounded-lg font-weight-light">
-                    Masa Subur
-                  </v-btn>
-                  <p class="font-weight-bold mt-5" :class="nosm ? 'caption' : 'body-1'">
-                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[2].start, $store.state.calc.hasilPerhitungan[2].end) }}
-                  </p>
-                </v-col>
-              </v-row>
-            </v-col>
-          </v-row>
-          <v-row>
+
             <v-col :cols="nosm ? '6' : '12'">
               <v-row>
                 <v-col>
@@ -143,6 +123,27 @@ export default class HasilSiklus extends mixins(mix) {
                   </v-btn>
                   <p class="font-weight-bold mt-5" :class="nosm ? 'caption' : 'body-1'">
                     {{ calcBetweenDates($store.state.calc.hasilPerhitungan[1].start, $store.state.calc.hasilPerhitungan[1].end) }}
+                  </p>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col :cols="nosm ? '6' : '12'">
+              <v-row>
+                <v-col>
+                  <v-card class="pa-5 rounded-xl" outlined width="100">
+                    <div class="d-flex justify-center">
+                      <img src="~/assets/hasilsiklus/fertz.png" alt="">
+                    </div>
+                  </v-card>
+                </v-col>
+                <v-col>
+                  <v-btn color="green" dark class="rounded-lg font-weight-light">
+                    Masa Subur
+                  </v-btn>
+                  <p class="font-weight-bold mt-5" :class="nosm ? 'caption' : 'body-1'">
+                    {{ calcBetweenDates($store.state.calc.hasilPerhitungan[2].start, $store.state.calc.hasilPerhitungan[2].end) }}
                   </p>
                 </v-col>
               </v-row>
