@@ -32,6 +32,10 @@ export default class RegisterLayout extends mixins(mix) {
     confPassword: ''
   }
 
+  messageProcess: string = ''
+  snackbar: boolean = false
+  loader: boolean = false
+
   activePicker: string = ''
   menu: boolean = false
   rules = {
@@ -41,7 +45,8 @@ export default class RegisterLayout extends mixins(mix) {
       (v: string) => v.length >= 3 || 'Nama minimal 3 karakter'
     ],
     datebirth: [
-      (v: string) => !!v || 'Tanggal lahir harus diisi'
+      (v: string) => !!v || 'Tanggal lahir harus diisi',
+      (v: string) => new Date().getFullYear() - new Date(v).getFullYear() >= 10 || 'Umur minimal 10 tahun'
     ],
     email: [
       (v: string) => !!v || 'Email harus diisi',
@@ -65,7 +70,13 @@ export default class RegisterLayout extends mixins(mix) {
   async registerProcess () {
     if (this.form.validate()) {
       try {
-        await this.$axios.$post('/users', this.register)
+        this.loader = true
+        await this.$axios.$post('/users', this.register).then((res: any) => {
+          this.messageProcess = res.message
+          this.snackbar = true
+          this.loader = false
+          this.$router.push('/auth/login')
+        })
       } catch (error) {
         return error
       }
@@ -168,9 +179,13 @@ export default class RegisterLayout extends mixins(mix) {
         color="pink"
         class="mt-5 rounded-lg"
         block
+        :loading="loader"
         @click="registerProcess"
       >
         Registrasi
+        <template #loader>
+          <v-progress-circular indeterminate size="20" color="white" />
+        </template>
       </v-btn>
     </v-form>
     <div class="d-flex justify-center">
@@ -181,5 +196,11 @@ export default class RegisterLayout extends mixins(mix) {
         </nuxt-link>
       </p>
     </div>
+    <v-snackbar v-model="snackbar" :timeout="5000">
+      {{ messageProcess }}
+      <v-btn color="pink" text @click="snackbar = false">
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
