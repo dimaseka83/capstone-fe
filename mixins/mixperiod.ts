@@ -38,6 +38,7 @@ export default class MixPeriod extends Vue {
     this.loading = true
     this.resetPerhitungan()
     const periodCycleDays = this.siklusCount
+    const bleedingDays = this.haidCount
 
     const periodStartDate = new Date(this.date)
 
@@ -48,42 +49,47 @@ export default class MixPeriod extends Vue {
     }
 
     const createEventsForDate = (date: Date) => {
-      const timeBetween = Math.abs(date.getTime() - periodStartDate.getTime())
-      const daysBetween = Math.ceil(timeBetween / (1000 * 3600 * 24))
-      const cyclesBetween = Math.floor(daysBetween / periodCycleDays)
+      const weekCycleFertile = Math.floor(periodCycleDays - 7)
       const events = []
 
       for (let i = 0; i < 1; i++) {
-        const cycyleDaysBetween = periodCycleDays * (cyclesBetween + i)
-        const p = addDays(periodStartDate, cycyleDaysBetween)
-        console.log(cycyleDaysBetween)
-        // const bleedingEnd = addDays(p, bleedingDays)
-        // const bleedingStart = addDays(p, fertilePhaseStart)
-        // const bleedingEnd = addDays(p, fertilePhaseEnd)
-        // const ovulationDayStart = addDays(p, ovulation)
-        // const ovulationDayEnd = new Date(new Date(ovulationDayStart).setHours(23, 59, 59, 999))
+        const p = addDays(date, 0)
+        const bleedingEnd = addDays(p, bleedingDays)
+        const proliferativeStart = addDays(bleedingEnd, 1)
+        const proliferativeEnd = addDays(proliferativeStart, 7)
+        const fertilePhaseStartDate = addDays(proliferativeEnd, 1)
+        const fertilePhaseEndDate = addDays(fertilePhaseStartDate, weekCycleFertile)
+        const ovulationDayStart = addDays(proliferativeEnd, 3)
+        const ovulationDayEnd = addDays(ovulationDayStart, 3)
 
-        // events.push({
-        //   name: 'Haid',
-        //   start: moment(bleedingStart).format('YYYY-MM-DD'),
-        //   end: moment(bleedingEnd).format('YYYY-MM-DD'),
-        //   color: 'red',
-        //   timed: true
-        // })
-        // events.push({
-        //   name: 'Fase subur',
-        //   start: moment(bleedingStart).format('YYYY-MM-DD'),
-        //   end: moment(bleedingEnd).format('YYYY-MM-DD'),
-        //   color: 'green',
-        //   timed: true
-        // })
-        // events.push({
-        //   name: 'Hari ovulasi',
-        //   start: moment(ovulationDayStart).format('YYYY-MM-DD'),
-        //   end: moment(ovulationDayEnd).format('YYYY-MM-DD'),
-        //   color: 'blue',
-        //   timed: true
-        // })
+        events.push({
+          name: 'Haid',
+          start: moment(p).format('YYYY-MM-DD'),
+          end: moment(bleedingEnd).format('YYYY-MM-DD'),
+          color: 'red',
+          timed: true
+        })
+        events.push({
+          name: 'Fase Tidak Subur',
+          start: moment(proliferativeStart).format('YYYY-MM-DD'),
+          end: moment(proliferativeEnd).format('YYYY-MM-DD'),
+          color: 'purple',
+          timed: true
+        })
+        events.push({
+          name: 'Fase subur',
+          start: moment(fertilePhaseStartDate).format('YYYY-MM-DD'),
+          end: moment(fertilePhaseEndDate).format('YYYY-MM-DD'),
+          color: 'green',
+          timed: true
+        })
+        events.push({
+          name: 'Hari ovulasi',
+          start: moment(ovulationDayStart).format('YYYY-MM-DD'),
+          end: moment(ovulationDayEnd).format('YYYY-MM-DD'),
+          color: 'blue',
+          timed: true
+        })
       }
       const haid = this.haidCount
       const siklus = this.siklusCount
