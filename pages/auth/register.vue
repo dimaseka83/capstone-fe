@@ -4,12 +4,12 @@ import mix from '~/mixins/mix'
 import { VForm } from 'types'
 
 interface Register {
-    nama: string
+    name: string
     datebirth: string
     email: string
     phone: string
     password: string
-    password_confirmation: string
+    confPassword: string
 }
 
 @Component({
@@ -24,19 +24,19 @@ export default class RegisterLayout extends mixins(mix) {
   }
 
   register: Register = {
-    nama: '',
+    name: '',
     datebirth: '',
     email: '',
     phone: '',
     password: '',
-    password_confirmation: ''
+    confPassword: ''
   }
 
   activePicker: string = ''
   menu: boolean = false
   rules = {
     valid: false,
-    nama: [
+    name: [
       (v: string) => !!v || 'Nama harus diisi',
       (v: string) => v.length >= 3 || 'Nama minimal 3 karakter'
     ],
@@ -55,16 +55,20 @@ export default class RegisterLayout extends mixins(mix) {
       (v: string) => !!v || 'Password harus diisi',
       (v: string) => v.length >= 6 || 'Password minimal 6 karakter'
     ],
-    password_confirmation: [
+    confPassword: [
       (v: string) => !!v || 'Konfirmasi password harus diisi',
       (v: string) => v.length >= 6 || 'Konfirmasi password minimal 6 karakter',
       (v: string) => v === this.register.password || 'Konfirmasi password tidak sama'
     ]
   }
 
-  registerProcess () {
+  async registerProcess () {
     if (this.form.validate()) {
-      alert('Register berhasil')
+      try {
+        await this.$axios.$post('/users', this.register)
+      } catch (error) {
+        return error
+      }
     }
   }
 
@@ -84,11 +88,11 @@ export default class RegisterLayout extends mixins(mix) {
 
     <v-form ref="formRegister" class="mt-5">
       <v-text-field
-        v-model="register.nama"
+        v-model="register.name"
         label="Nama"
         outlined
         dense
-        :rules="rules.nama"
+        :rules="rules.name"
         class="mt-3"
       />
       <v-menu
@@ -149,12 +153,12 @@ export default class RegisterLayout extends mixins(mix) {
         class="mt-3"
       />
       <v-text-field
-        v-model="register.password_confirmation"
+        v-model="register.confPassword"
         label="Konfirmasi Password"
         outlined
         dense
         type="password"
-        :rules="rules.password_confirmation"
+        :rules="rules.confPassword"
         class="mt-3"
       />
 

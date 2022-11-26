@@ -46,6 +46,7 @@ export default class HasilSiklus extends mixins(mix) {
     const startDate = new Date(start)
     const endDate = new Date(end)
     const dates = []
+    // eslint-disable-next-line no-unmodified-loop-condition
     while (startDate <= endDate) {
       dates.push(moment(startDate).format('YYYY-MM-DD'))
       startDate.setDate(startDate.getDate() + 1)

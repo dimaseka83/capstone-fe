@@ -30,9 +30,13 @@ export default class Login extends mixins(mix) {
     ]
   }
 
-  loginProcess () {
+  async loginProcess () {
     if (this.form.validate()) {
-      alert('Login berhasil')
+      try {
+        await this.$axios.$post('/login', this.login)
+      } catch (error) {
+        return error
+      }
     }
   }
 }
