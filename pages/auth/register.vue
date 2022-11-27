@@ -69,7 +69,15 @@ export default class RegisterLayout extends mixins(mix) {
     if (this.form.validate()) {
       try {
         this.loader = true
-        await this.$axios.$post('/users', this.register).then((res: any) => {
+        const dataRegister = JSON.stringify(this.register)
+        await this.$axios({
+          method: 'post',
+          url: '/users ',
+          data: dataRegister,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then((res: any) => {
           this.$nuxt.$emit('messageProcess', res.msg)
           this.loader = false
           this.$router.push('/auth/login')
