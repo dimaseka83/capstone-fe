@@ -1,5 +1,6 @@
 <script lang="ts">
 import { Component, mixins, Ref } from 'nuxt-property-decorator'
+import { Action } from 'vuex-class'
 import mix from '~/mixins/mix'
 import { VForm } from 'types'
 
@@ -13,6 +14,9 @@ interface login {
 })
 export default class Login extends mixins(mix) {
   @Ref('formLogin') readonly form!: VForm
+  @Action('auth/getUser') getUser: any
+  @Action('auth/getToken') getToken: any
+
   login: login = {
     email: '',
     password: ''
@@ -33,9 +37,15 @@ export default class Login extends mixins(mix) {
   async loginProcess () {
     if (this.form.validate()) {
       try {
-        await this.$axios.$post('/login', this.login)
+        await this.$axios.$post('/login', this.login).then((res: any) => {
+          this.$nuxt.$emit('messageProcess', 'Login berhasil')
+          this.getUser(res.name)
+          this.getToken(res.accesToken)
+          this.$router.push('/')
+          localStorage.setItem('user', JSON.stringify(res))
+        })
       } catch (error) {
-        return error
+        this.$nuxt.$emit('messageProcess', 'Login gagal')
       }
     }
   }

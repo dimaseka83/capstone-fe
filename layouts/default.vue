@@ -1,3 +1,28 @@
+<script lang="ts">
+import { Component, mixins } from 'nuxt-property-decorator'
+import { Action } from 'vuex-class'
+import mix from '~/mixins/mix'
+
+@Component
+export default class Default extends mixins(mix) {
+  @Action('auth/getUser') getUser: any
+  @Action('auth/getToken') getToken: any
+
+  created () {
+    this.getUsers()
+  }
+
+  getUsers () {
+    const user = localStorage.getItem('user')
+    if (user) {
+      const data = JSON.parse(user)
+      this.getUser(data.name)
+      this.getToken(data.accesToken)
+    }
+  }
+}
+</script>
+
 <template>
   <v-app dark>
     <navigation-guest />
@@ -7,32 +32,3 @@
     <footer-guest />
   </v-app>
 </template>
-
-<script>
-export default {
-  name: 'DefaultLayout',
-  data () {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
-    }
-  }
-}
-</script>

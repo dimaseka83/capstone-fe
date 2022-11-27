@@ -32,8 +32,6 @@ export default class RegisterLayout extends mixins(mix) {
     confPassword: ''
   }
 
-  messageProcess: string = ''
-  snackbar: boolean = false
   loader: boolean = false
 
   activePicker: string = ''
@@ -72,8 +70,7 @@ export default class RegisterLayout extends mixins(mix) {
       try {
         this.loader = true
         await this.$axios.$post('/users', this.register).then((res: any) => {
-          this.messageProcess = res.message
-          this.snackbar = true
+          this.$nuxt.$emit('messageProcess', res.msg)
           this.loader = false
           this.$router.push('/auth/login')
         })
@@ -196,11 +193,5 @@ export default class RegisterLayout extends mixins(mix) {
         </nuxt-link>
       </p>
     </div>
-    <v-snackbar v-model="snackbar" :timeout="5000">
-      {{ messageProcess }}
-      <v-btn color="pink" text @click="snackbar = false">
-        Close
-      </v-btn>
-    </v-snackbar>
   </v-app>
 </template>
