@@ -98,6 +98,7 @@ export default class Login extends mixins(mix) {
         color="pink"
         class="mt-5 rounded-lg"
         block
+        :loading="loader"
         @click="loginProcess"
       >
         <template #loader>
