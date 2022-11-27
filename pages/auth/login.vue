@@ -22,6 +22,8 @@ export default class Login extends mixins(mix) {
     password: ''
   }
 
+  loader: boolean = false
+
   rules = {
     valid: false,
     email: [
@@ -37,12 +39,14 @@ export default class Login extends mixins(mix) {
   async loginProcess () {
     if (this.form.validate()) {
       try {
+        this.loader = true
         await this.$axios.$post('/login', this.login).then((res: any) => {
           this.$nuxt.$emit('messageProcess', 'Login berhasil')
           this.getUser(res.name)
           this.getToken(res.accesToken)
-          this.$router.push('/')
           localStorage.setItem('user', JSON.stringify(res))
+          this.loader = false
+          this.$router.push('/')
         })
       } catch (error) {
         this.$nuxt.$emit('messageProcess', 'Login gagal')
@@ -96,6 +100,9 @@ export default class Login extends mixins(mix) {
         block
         @click="loginProcess"
       >
+        <template #loader>
+          <v-progress-circular indeterminate size="20" color="white" />
+        </template>
         Masuk
       </v-btn>
     </v-form>
