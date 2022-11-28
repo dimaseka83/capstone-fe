@@ -73,9 +73,13 @@ export default class RegisterLayout extends mixins(mix) {
           this.$nuxt.$emit('messageProcess', res.msg)
           this.loader = false
           this.$router.push('/auth/login')
+        }).catch((err: any) => {
+          this.$nuxt.$emit('messageProcess', err.response.data.msg)
+          this.loader = false
         })
-      } catch (error) {
-        return error
+      } catch (error: any) {
+        this.$nuxt.$emit('messageProcess', error)
+        this.loader = false
       }
     }
   }
@@ -194,4 +198,4 @@ export default class RegisterLayout extends mixins(mix) {
       </p>
     </div>
   </v-app>
-</template>  
+</template>
