@@ -15,9 +15,13 @@ export default class Default extends mixins(mix) {
   getUsers () {
     const user = localStorage.getItem('user')
     if (user) {
-      const data = JSON.parse(user)
-      this.getUser(data.name)
-      this.getToken(data.accesToken)
+      const res = JSON.parse(user)
+      const users = {
+        name: res.name,
+        email: res.email
+      }
+      this.getUser(users)
+      this.getToken(res.accesToken)
     }
   }
 }

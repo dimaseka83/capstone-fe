@@ -5,7 +5,7 @@ import { VForm } from 'types'
 
 interface Register {
     name: string
-    datebirth: string
+    birthDate: string
     email: string
     phone: string
     password: string
@@ -25,7 +25,7 @@ export default class RegisterLayout extends mixins(mix) {
 
   register: Register = {
     name: '',
-    datebirth: '',
+    birthDate: '',
     email: '',
     phone: '',
     password: '',
@@ -42,7 +42,7 @@ export default class RegisterLayout extends mixins(mix) {
       (v: string) => !!v || 'Nama harus diisi',
       (v: string) => v.length >= 3 || 'Nama minimal 3 karakter'
     ],
-    datebirth: [
+    birthDate: [
       (v: string) => !!v || 'Tanggal lahir harus diisi',
       (v: string) => new Date().getFullYear() - new Date(v).getFullYear() >= 10 || 'Umur minimal 10 tahun'
     ],
@@ -69,7 +69,7 @@ export default class RegisterLayout extends mixins(mix) {
     if (this.form.validate()) {
       try {
         this.loader = true
-        await this.$axios.$post('/users', this.register).then((res: any) => {
+        await this.$axios.$post('/userss', this.register).then((res: any) => {
           this.$nuxt.$emit('messageProcess', res.msg)
           this.loader = false
           this.$router.push('/auth/login')
@@ -85,7 +85,7 @@ export default class RegisterLayout extends mixins(mix) {
   }
 
   save (date: string) {
-    this.register.datebirth = date
+    this.register.birthDate = date
   }
 }
 </script>
@@ -117,20 +117,20 @@ export default class RegisterLayout extends mixins(mix) {
       >
         <template #activator="{ on, attrs }">
           <v-text-field
-            v-model="register.datebirth"
+            v-model="register.birthDate"
             label="Tanggal lahir"
             outlined
             dense
             append-icon="mdi-calendar"
             readonly
             v-bind="attrs"
-            :rules="rules.datebirth"
+            :rules="rules.birthDate"
             class="mt-3"
             v-on="on"
           />
         </template>
         <v-date-picker
-          v-model="register.datebirth"
+          v-model="register.birthDate"
           color="pink"
           :active-picker.sync="activePicker"
           :max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"

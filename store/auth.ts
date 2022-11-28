@@ -5,9 +5,9 @@ export const state = () => ({
 
 export const mutations = {
   setUser (state: { user: any }, payload: any) {
-    // console.log('setUser', payload)
     state.user = {
-      name: payload
+      name: payload.name,
+      email: payload.email
     }
   },
 
