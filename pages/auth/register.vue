@@ -194,4 +194,4 @@ export default class RegisterLayout extends mixins(mix) {
       </p>
     </div>
   </v-app>
-</template>
+</template>  
