@@ -42,14 +42,26 @@ export default class Login extends mixins(mix) {
         this.loader = true
         await this.$axios.$post('/login', this.login).then((res: any) => {
           this.$nuxt.$emit('messageProcess', 'Login berhasil')
-          this.getUser(res.name)
+          const users = {
+            name: res.name,
+            email: res.email
+          }
+          this.getUser(users)
           this.getToken(res.accesToken)
           localStorage.setItem('user', JSON.stringify(res))
           this.loader = false
           this.$router.push('/')
+        }).catch((err: any) => {
+          if (err.response.status === 404) {
+            this.$nuxt.$emit('messageProcess', 'Email tidak terdaftar')
+          } else {
+            this.$nuxt.$emit('messageProcess', err.response.data.msg)
+          }
+          this.loader = false
         })
-      } catch (error) {
-        this.$nuxt.$emit('messageProcess', 'Login gagal')
+      } catch (error: any) {
+        this.$nuxt.$emit('messageProcess', error.msg)
+        this.loader = false
       }
     }
   }

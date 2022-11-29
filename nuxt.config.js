@@ -72,6 +72,12 @@ export default {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    treeShake: true,
+    defaultAssets: {
+      font: {
+        family: 'PlusJakartaSans'
+      }
+    },
     theme: {
       dark: false,
       themes: {
@@ -90,5 +96,6 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: ['vuetify/lib', 'tiptap-vuetify']
   }
 }

@@ -80,12 +80,12 @@ export default class NavigationGuest extends mixins(Mix) {
                   <v-avatar size="30" class="mr-2">
                     <img src="https://picsum.photos/32">
                   </v-avatar>
-                  <div class="d-flex flex-column">
+                  <div class="d-flex flex-column text-left">
                     <div class="font-weight-bold">
                       {{ $store.state.auth.user.name }}
                     </div>
-                    <div class="font-weight-light">
-                      <!-- {{ $store.state.auth.user }} -->
+                    <div class="font-weight-light overline">
+                      {{ $store.state.auth.user.email }}
                     </div>
                   </div>
                 </div>
@@ -154,12 +154,12 @@ export default class NavigationGuest extends mixins(Mix) {
                       <v-avatar size="30" class="mr-2">
                         <img src="https://picsum.photos/32">
                       </v-avatar>
-                      <div class="d-flex flex-column">
+                      <div class="d-flex flex-column text-left">
                         <div class="font-weight-bold">
                           {{ $store.state.auth.user.name }}
                         </div>
-                        <div class="font-weight-light">
-                          <!-- {{ $store.state.auth.user }} -->
+                        <div class="font-weight-light overline">
+                          {{ $store.state.auth.user.email }}
                         </div>
                       </div>
                     </div>
