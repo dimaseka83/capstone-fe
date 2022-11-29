@@ -31,7 +31,7 @@ export default class Default extends mixins(mix) {
   <v-app dark>
     <navigation-guest />
     <v-main>
-      <Nuxt />
+      <Nuxt keep-alive />
     </v-main>
     <footer-guest />
   </v-app>

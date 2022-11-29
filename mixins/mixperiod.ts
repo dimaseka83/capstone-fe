@@ -93,9 +93,9 @@ export default class MixPeriod extends Vue {
       }
       const haid = this.haidCount
       const siklus = this.siklusCount
-      // this.getPerhitungan(events)
+      this.getPerhitungan(events)
       this.getHaid({ haid, siklus })
-      // this.openMenu('/hasilsiklus')
+      this.openMenu('/hasilsiklus')
     }
     return createEventsForDate(periodStartDate)
   }
