@@ -13,9 +13,9 @@ export default class AdminBerita extends mixins(mix) {
   // Table
   dialog: boolean = false
   form : any = {
-    name: '',
+    title: '',
     deskripsi: '',
-    image: ''
+    file: ''
   }
 
   items: Array<any> = []
@@ -50,7 +50,7 @@ export default class AdminBerita extends mixins(mix) {
           'Allow-Control-Allow-Origin': '*'
         }
       }).then((res: any) => {
-        // this.initialize()
+        this.initialize()
         this.loading = false
       })
     } catch (error) {
@@ -59,29 +59,15 @@ export default class AdminBerita extends mixins(mix) {
   }
 
   async save () {
-    this.loading = true
-    try {
-      await this.$axios({
-        method: 'post',
-        url: this.api + 'products',
-        data: this.form,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then((res: any) => {
-        this.items.push(res.data)
-        this.dialog = false
-        this.loading = false
-      }).catch((err: any) => {
-        alert(err)
-        this.loading = false
-        this.dialog = false
-      })
-    } catch (err: any) {
-      alert(err)
-      this.loading = false
-      this.dialog = false
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     }
+    const { data } = await this.$axios.$post(this.api + 'products', this.form, config)
+    console.log(data)
+    this.dialog = false
+    this.initialize()
   }
 }
 </script>
@@ -136,13 +122,13 @@ export default class AdminBerita extends mixins(mix) {
                         <v-container>
                           <v-row>
                             <v-col cols="12">
-                              <v-text-field v-model="form.name" label="Judul" />
+                              <v-text-field v-model="form.title" label="Judul" />
                             </v-col>
                             <v-col cols="12">
                               <v-tiptap v-model="form.deskripsi" :toolbar="toolbar" />
                             </v-col>
                             <v-col cols="12">
-                              <v-file-input v-model="form.image" label="Gambar" />
+                              <v-file-input v-model="form.file" label="Gambar" />
                             </v-col>
                           </v-row>
                         </v-container>
