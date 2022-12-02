@@ -4,6 +4,10 @@ import mix from '~/mixins/mix'
 
 @Component
 export default class AdminBerita extends mixins(mix) {
+  // Snack bar
+  msg: string = ''
+  snackbar: boolean = false
+
   // Api Berita
   api: string = 'https://sikmennews.herokuapp.com/'
   loading: boolean = false
@@ -55,19 +59,56 @@ export default class AdminBerita extends mixins(mix) {
       })
     } catch (error) {
       this.loading = false
+      this.msg = 'Gagal menghapus data'
+      this.snackbar = true
     }
   }
 
-  async save () {
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+  edit (item: any) {
+    this.form = {
+      id: item.id,
+      title: item.name,
+      deskripsi: item.deskripsi,
+      file: item.file
     }
-    const { data } = await this.$axios.$post(this.api + 'products', this.form, config)
-    console.log(data)
-    this.dialog = false
-    this.initialize()
+    this.dialog = true
+  }
+
+  async save () {
+    try {
+      const formData = new FormData()
+      formData.append('title', this.form.title)
+      formData.append('deskripsi', this.form.deskripsi)
+      formData.append('file', this.form.file)
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+
+      if (this.form.id) {
+        await this.$axios.patch(`${this.api}products/${this.form.id}`, formData, config).then((res: any) => {
+          this.initialize()
+          this.dialog = false
+        })
+      } else if (!this.form.file) {
+        this.msg = 'Gambar tidak boleh kosong'
+        this.snackbar = true
+      } else {
+        await this.$axios.post(this.api + 'products', formData, config).then((res: any) => {
+          this.initialize()
+          this.dialog = false
+        })
+      }
+    } catch (error) {
+      this.msg = 'Terjadi kesalahan'
+      this.snackbar = true
+    }
+    this.form = {
+      title: '',
+      deskripsi: '',
+      file: ''
+    }
   }
 }
 </script>
@@ -90,8 +131,11 @@ export default class AdminBerita extends mixins(mix) {
               <template #item.url="{ item }">
                 <v-img :src="item.url" width="100" height="100" />
               </template>
+              <template #item.deskripsi="{ item }">
+                <div v-html="item.deskripsi" />
+              </template>
               <template #item.aksi="{ item }">
-                <v-btn color="primary" class="mr-2">
+                <v-btn color="primary" class="mr-2" @click="edit(item)">
                   Edit
                 </v-btn>
                 <v-btn color="error" @click="hapus(item.id)">
@@ -150,6 +194,14 @@ export default class AdminBerita extends mixins(mix) {
           </v-card>
         </v-col>
       </v-row>
+      <v-snackbar v-model="snackbar">
+        {{ msg }}
+        <template #action="{attrs}">
+          <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
     </v-container>
   </v-app>
 </template>
