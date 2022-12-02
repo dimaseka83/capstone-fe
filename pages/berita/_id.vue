@@ -47,7 +47,7 @@ export default class Berita extends mixins(mix) {
       </v-card>
     </v-container>
     <v-container>
-      <div v-html="berita.deskripsi"></div>
+      <div v-html="berita.deskripsi" />
     </v-container>
   </v-app>
 </template>

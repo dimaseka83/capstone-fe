@@ -22,6 +22,8 @@ export default class AdminBerita extends mixins(mix) {
     file: ''
   }
 
+  titleForm: string = 'Tambah Berita'
+
   items: Array<any> = []
   search: string = ''
   headers: any = [
@@ -65,6 +67,7 @@ export default class AdminBerita extends mixins(mix) {
   }
 
   edit (item: any) {
+    this.titleForm = 'Edit Berita'
     this.form = {
       id: item.id,
       title: item.name,
@@ -154,13 +157,20 @@ export default class AdminBerita extends mixins(mix) {
                   <v-spacer />
                   <v-dialog v-model="dialog" max-width="1000px">
                     <template #activator="{ on, attrs }">
-                      <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                      <v-btn
+                        color="primary"
+                        dark
+                        class="mb-2"
+                        v-bind="attrs"
+                        v-on="on"
+                        @click="titleForm = 'Tambah Berita'"
+                      >
                         Tambah Berita
                       </v-btn>
                     </template>
                     <v-card>
                       <v-card-title>
-                        <span class="headline">Tambah Berita</span>
+                        <span class="headline">{{ titleForm }}</span>
                       </v-card-title>
                       <v-card-text>
                         <v-container>
