@@ -20,6 +20,21 @@ export default class IndexPage extends mixins(mix, mixperiod) {
     pesan: ''
   }
 
+  faqs: any = [
+    {
+      pertanyaan: 'Bagaimana cara kerja program sikmen?',
+      jawaban: 'cara kerja sikmen yaitu setiap anda menginputkan siklus anda dibulan yang anda pilih maka aplikasi akan menghitung siklus anda secara otomatis'
+    },
+    {
+      pertanyaan: 'Bagaimana cara menyimpan siklus menstruasi saya?',
+      jawaban: 'silahkan anda login jika anda sudah mempunyai akun, jika belum punya silahkan anda register terlebih dahulu, lalu anda dapat klik tombol simpan hasil'
+    },
+    {
+      pertanyaan: 'Apakah hasil Siklus yang telah dihitung akurat?',
+      jawaban: 'kita sudah melakukan beberapa survey ke beberapa wanita yang mengalami siklus menstruasi, dan 9 dari 10 wanita menyebutkan bahwasanya perhitungannya sangat akurat'
+    }
+  ]
+
   created () {
     this.initialize()
   }
@@ -214,18 +229,14 @@ export default class IndexPage extends mixins(mix, mixperiod) {
       <v-row justify="center" class="mt-10">
         <v-expansion-panels multiple>
           <v-expansion-panel
-            v-for="faq in 3"
-            :key="faq"
+            v-for="(faq, idx) in faqs"
+            :key="idx"
           >
             <v-expansion-panel-header class="font-weight-bold headline">
-              Apa itu sikmen?
+              {{ faq.pertanyaan }}
             </v-expansion-panel-header>
-            <v-expansion-panel-content class="text--disabled">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              euismod, nunc ut aliquam tincidunt, nunc elit aliquam mauris,
-              vitae ultricies nisl nunc vel mauris. Sed euismod, nunc ut
-              aliquam tincidunt, nunc elit aliquam mauris, vitae ultricies
-              nisl nunc vel mauris.
+            <v-expansion-panel-content class="text--disabled text-capitalize">
+              {{ faq.jawaban }}
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -270,7 +281,3 @@ export default class IndexPage extends mixins(mix, mixperiod) {
     </v-container>
   </v-app>
 </template>
-
-function addDays(periodStartDate: Date, cycyleDaysBetween: number) {
-  throw new Error('Function not implemented.')
-}
