@@ -1,10 +1,12 @@
 <script lang="ts">
-import { Component, mixins } from 'nuxt-property-decorator'
+import { Component, mixins, Ref } from 'nuxt-property-decorator'
 import { Action } from 'vuex-class'
 import mix from '~/mixins/mix'
+import { VForm } from 'types'
 
 @Component
 export default class AdminBerita extends mixins(mix) {
+  @Ref('formBerita') readonly forms!: VForm
   @Action('berita/getBerita') getBerita: any
   // Snack bar
   msg: string = ''
@@ -22,6 +24,19 @@ export default class AdminBerita extends mixins(mix) {
     title: '',
     deskripsi: '',
     file: ''
+  }
+
+  rules = {
+    valid: false,
+    title: [
+      (v: string) => !!v || 'Judul harus diisi'
+    ],
+    deskripsi: [
+      (v: string) => !!v || 'Deskripsi harus diisi'
+    ],
+    file: [
+      (v: String) => !!v || 'Gambar harus diisi'
+    ]
   }
 
   titleForm: string = 'Tambah Berita'
@@ -78,39 +93,58 @@ export default class AdminBerita extends mixins(mix) {
   }
 
   async save () {
-    try {
-      const formData = new FormData()
-      formData.append('title', this.form.title)
-      formData.append('deskripsi', this.form.deskripsi)
-      formData.append('file', this.form.file)
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+    const fileMustJpg = this.form.file.name.split('.').pop()
+    console.log(fileMustJpg)
+    if (this.forms.validate()) {
+      if (fileMustJpg === 'jpg' || fileMustJpg === 'jpeg' || fileMustJpg === 'png') {
+        this.loading = true
+        try {
+          if (this.titleForm === 'Tambah Berita') {
+            const formData = new FormData()
+            formData.append('name', this.form.title)
+            formData.append('deskripsi', this.form.deskripsi)
+            formData.append('file', this.form.file)
+            await this.$axios({
+              method: 'post',
+              url: this.api + 'products',
+              data: formData,
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                'Allow-Control-Allow-Origin': '*'
+              }
+            }).then((res: any) => {
+              this.initialize()
+              this.loading = false
+              this.dialog = false
+            })
+          } else {
+            const formData = new FormData()
+            formData.append('name', this.form.title)
+            formData.append('deskripsi', this.form.deskripsi)
+            formData.append('file', this.form.file)
+            await this.$axios({
+              method: 'put',
+              url: this.api + 'products/' + this.form.id,
+              data: formData,
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                'Allow-Control-Allow-Origin': '*'
+              }
+            }).then((res: any) => {
+              this.initialize()
+              this.loading = false
+              this.dialog = false
+            })
+          }
+        } catch (error) {
+          this.loading = false
+          this.msg = 'Gagal menyimpan data'
+          this.snackbar = true
         }
-      }
-
-      if (this.form.id) {
-        await this.$axios.patch(`${this.api}products/${this.form.id}`, formData, config).then((res: any) => {
-          this.initialize()
-          this.dialog = false
-        })
-      } else if (!this.form.file) {
-        this.msg = 'Gambar tidak boleh kosong'
-        this.snackbar = true
       } else {
-        await this.$axios.post(this.api + 'products', formData, config).then((res: any) => {
-          this.initialize()
-          this.dialog = false
-        })
+        this.msg = 'File harus jpg atau png'
+        this.snackbar = true
       }
-    } catch (error) {
-      this.msg = 'Terjadi kesalahan'
-      this.snackbar = true
-    }
-    this.form = {
-      title: '',
-      deskripsi: '',
-      file: ''
     }
   }
 }
@@ -174,21 +208,24 @@ export default class AdminBerita extends mixins(mix) {
                       </v-card-title>
                       <v-card-text>
                         <v-container>
-                          <v-row>
-                            <v-col cols="12">
-                              <v-text-field v-model="form.title" label="Judul" />
-                            </v-col>
-                            <v-col cols="12">
-                              <v-tiptap v-model="form.deskripsi" :toolbar="toolbar" />
-                            </v-col>
-                            <v-col cols="12">
-                              <v-file-input
-                                v-model="form.file"
-                                label="Gambar"
-                                accept="jpg, jpeg, png"
-                              />
-                            </v-col>
-                          </v-row>
+                          <v-form ref="formBerita" lazy-validation>
+                            <v-row>
+                              <v-col cols="12">
+                                <v-text-field v-model="form.title" label="Judul" :rules="rules.title" />
+                              </v-col>
+                              <v-col cols="12">
+                                <v-tiptap v-model="form.deskripsi" :toolbar="toolbar" />
+                                <v-text-field v-show="false" v-model="form.deskripsi" label="Deskripsi" :rules="rules.deskripsi" />
+                              </v-col>
+                              <v-col cols="12">
+                                <v-file-input
+                                  v-model="form.file"
+                                  label="Gambar"
+                                  :rules="rules.file"
+                                />
+                              </v-col>
+                            </v-row>
+                          </v-form>
                         </v-container>
                       </v-card-text>
                       <v-card-actions>
@@ -208,14 +245,14 @@ export default class AdminBerita extends mixins(mix) {
           </v-card>
         </v-col>
       </v-row>
-      <v-snackbar v-model="snackbar">
-        {{ msg }}
-        <template #action="{attrs}">
-          <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
-            Close
-          </v-btn>
-        </template>
-      </v-snackbar>
     </v-container>
+    <v-snackbar v-model="snackbar">
+      {{ msg }}
+      <template #action="{ attrs }">
+        <v-btn text color="pink" v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
