@@ -1,15 +1,17 @@
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
+import { Action } from 'vuex-class'
 import mix from '~/mixins/mix'
 
 @Component
 export default class AdminBerita extends mixins(mix) {
+  @Action('berita/getBerita') getBerita: any
   // Snack bar
   msg: string = ''
   snackbar: boolean = false
 
   // Api Berita
-  api: string = 'https://sikmennews.herokuapp.com/'
+  api: string = 'https://crudapi-production.up.railway.app/'
   loading: boolean = false
 
   toolbar: any = ['bold', 'italic', 'underline', 'strike', '|', 'bulletList', 'orderedList', 'h1', 'h2', 'h3', 'p']
@@ -37,11 +39,9 @@ export default class AdminBerita extends mixins(mix) {
     this.initialize()
   }
 
-  async initialize () {
+  initialize () {
     this.loading = true
-    await this.$axios.get(this.api + 'products').then((res: any) => {
-      this.items = res.data
-    })
+    this.getBerita()
     this.loading = false
   }
 
@@ -130,7 +130,7 @@ export default class AdminBerita extends mixins(mix) {
                 hide-details
               />
             </v-card-title>
-            <v-data-table :headers="headers" :items="items" :search="search" :loading="loading" loading-text="Loading... Please wait">
+            <v-data-table :headers="headers" :items="$store.state.berita.berita" :search="search" :loading="loading" loading-text="Loading... Please wait">
               <template #item.url="{ item }">
                 <v-img :src="item.url" width="100" height="100" />
               </template>

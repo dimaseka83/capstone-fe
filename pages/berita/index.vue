@@ -1,27 +1,23 @@
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
+import { Action } from 'vuex-class'
 import mix from '~/mixins/mix'
 
 @Component
 export default class Berita extends mixins(mix) {
+  @Action('berita/getBerita') getBerita: any
   text: string = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
   loading: boolean = false
-
-  berita: Array<any> = []
 
   created () {
     this.initialize()
   }
 
-  async initialize () {
-    try {
-      const { data } = await this.$axios.get('https://sikmennews.herokpp.com/products')
-      const urutkanTerbaru = data.sort((a: any, b: any) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      })
-      this.berita = urutkanTerbaru
-    } catch (error) {
-      return error
+  initialize () {
+    if (this.$store.state.berita.berita.length === 0) {
+      this.loading = true
+      this.getBerita()
+      this.loading = false
     }
   }
 }
@@ -79,7 +75,7 @@ export default class Berita extends mixins(mix) {
         Berita Terbaru
       </h1>
       <v-row>
-        <v-col v-for="artikel in berita" :key="artikel.id" :cols="nosm ? '4' : '12'">
+        <v-col v-for="artikel in $store.state.berita.berita" :key="artikel.id" :cols="nosm ? '4' : '12'">
           <v-hover v-slot="{ hover }">
             <v-card
               :height="nosm ? height : ''"
@@ -88,6 +84,13 @@ export default class Berita extends mixins(mix) {
               :elevation="hover ? 12 : 2"
               :class="{ 'on-hover': hover }"
             >
+              <template slot="progress">
+                <v-progress-linear
+                  color="deep-purple"
+                  height="10"
+                  indeterminate
+                />
+              </template>
               <v-img :src="artikel.url" :height="height / 2" />
               <v-card-text class="pa-10 black--text">
                 <h1 class=" headline font-weight-medium">

@@ -1,6 +1,7 @@
 <!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script lang="ts">
 import { mixins, Component } from 'nuxt-property-decorator'
+import { Action } from 'vuex-class'
 import mix from '~/mixins/mix'
 import mixperiod from '~/mixins/mixperiod'
 
@@ -12,10 +13,27 @@ interface formBantuan {
 
 @Component
 export default class IndexPage extends mixins(mix, mixperiod) {
+  @Action('berita/getBerita') getBerita: any
   formBantuan: formBantuan = {
     nama: '',
     email: '',
     pesan: ''
+  }
+
+  created () {
+    this.initialize()
+  }
+
+  initialize () {
+    if (this.$store.state.berita.berita.length === 0) {
+      this.loading = true
+      this.getBerita()
+      this.loading = false
+    }
+  }
+
+  get beritathreeonly () {
+    return this.$store.state.berita.berita.slice(0, 3)
   }
 }
 
@@ -151,33 +169,37 @@ export default class IndexPage extends mixins(mix, mixperiod) {
     </v-container>
     <v-container class="mt-16">
       <v-row>
-        <v-col v-for="artikel in 3" :key="artikel" :cols="nosm ? '4' : '12'">
-          <v-card :height="nosm ? height : ''" :loading="loading">
-            <template slot="progress">
-              <v-progress-linear
-                color="deep-purple"
-                height="10"
-                indeterminate
-              />
-            </template>
-            <v-img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
-            <v-card-text class="pa-10 black--text">
-              <h1 class=" headline font-weight-medium">
-                Artikel 1
-              </h1>
-              <p class="text--disabled body">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                euismod, nunc ut aliquam tincidunt, nunc elit aliquam mauris,
-                vitae ultricies nisl nunc vel mauris. Sed euismod, nunc ut
-                aliquam tincidunt, nunc elit aliquam mauris, vitae ultricies
-                nisl nunc vel mauris.
-              </p>
-            </v-card-text>
-          </v-card>
+        <v-col v-for="artikel in beritathreeonly" :key="artikel" :cols="nosm ? '4' : '12'">
+          <v-hover v-slot="{ hover }">
+            <v-card
+              :height="nosm ? height : ''"
+              :loading="loading"
+              :to="`/berita/${artikel.id}`"
+              :elevation="hover ? 12 : 2"
+              :class="{ 'on-hover': hover }"
+            >
+              <template slot="progress">
+                <v-progress-linear
+                  color="deep-purple"
+                  height="10"
+                  indeterminate
+                />
+              </template>
+              <v-img :src="artikel.url" :height="height / 2" />
+              <v-card-text class="pa-10 black--text">
+                <h1 class=" headline font-weight-medium">
+                  {{ artikel.name }}
+                </h1>
+                <p class="text--disabled body">
+                  <span v-html="limitText(artikel.deskripsi, 200)" />
+                </p>
+              </v-card-text>
+            </v-card>
+          </v-hover>
         </v-col>
       </v-row>
       <div class="d-flex justify-center mt-10">
-        <v-btn color="pink" large class="px-5 rounded-lg" dark>
+        <v-btn color="pink" large class="px-5 rounded-lg" dark @click="openMenu('/berita')">
           Lihat Semua
         </v-btn>
       </div>

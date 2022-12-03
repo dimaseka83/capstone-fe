@@ -9,7 +9,7 @@ export default class Berita extends mixins(mix) {
   loading: boolean = false
 
   berita: Array<any> = []
-  link: string = 'https://sikmennews.herokuapp.com/products/'
+  link: string = 'https://crudapi-production.up.railway.app/products/'
 
   created () {
     this.initialize()
