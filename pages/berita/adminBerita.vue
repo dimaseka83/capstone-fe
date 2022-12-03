@@ -182,7 +182,11 @@ export default class AdminBerita extends mixins(mix) {
                               <v-tiptap v-model="form.deskripsi" :toolbar="toolbar" />
                             </v-col>
                             <v-col cols="12">
-                              <v-file-input v-model="form.file" label="Gambar" />
+                              <v-file-input
+                                v-model="form.file"
+                                label="Gambar"
+                                accept="jpg, jpeg, png"
+                              />
                             </v-col>
                           </v-row>
                         </v-container>
