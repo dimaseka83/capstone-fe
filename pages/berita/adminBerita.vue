@@ -150,7 +150,7 @@ export default class AdminBerita extends mixins(mix) {
 </script>
 <template>
   <v-app>
-    <v-container class="fill-height">
+    <v-container class="fill-height my-16">
       <v-row>
         <v-col cols="12">
           <v-card>
