@@ -87,21 +87,20 @@ export default class AdminBerita extends mixins(mix) {
       id: item.id,
       title: item.name,
       deskripsi: item.deskripsi,
-      file: item.file
+      file: item.image
     }
     this.dialog = true
   }
 
   async save () {
     const fileMustJpg = this.form.file.name.split('.').pop()
-    console.log(fileMustJpg)
     if (this.forms.validate()) {
       if (fileMustJpg === 'jpg' || fileMustJpg === 'jpeg' || fileMustJpg === 'png') {
         this.loading = true
         try {
           if (this.titleForm === 'Tambah Berita') {
             const formData = new FormData()
-            formData.append('name', this.form.title)
+            formData.append('title', this.form.title)
             formData.append('deskripsi', this.form.deskripsi)
             formData.append('file', this.form.file)
             await this.$axios({
