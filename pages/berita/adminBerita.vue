@@ -168,7 +168,7 @@ export default class AdminBerita extends mixins(mix) {
                 <v-img :src="item.url" width="100" height="100" />
               </template>
               <template #item.deskripsi="{ item }">
-                <div v-html="item.deskripsi" />
+                <div v-html="limitText(item.deskripsi, 100)" />
               </template>
               <template #item.aksi="{ item }">
                 <v-btn color="primary" class="mr-2" @click="edit(item)">
