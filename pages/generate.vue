@@ -59,7 +59,7 @@ export default class Generate extends Vue {
                         Tanggal Akhir
                       </th>
                       <th class="text-left">
-                        Jumlah Akhir
+                        Jumlah Masa (Hari)
                       </th>
                     </tr>
                   </thead>
