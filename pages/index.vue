@@ -73,14 +73,27 @@ export default class IndexPage extends mixins(mix, mixperiod) {
             <p class="text--disabled" :class="nosm ? 'body' : 'body-2'">
               Cek siklus menstruasi kamu dan simpan hasilnya.
             </p>
-            <v-row v-if="nosm" class="ml-1">
-              <v-btn color="pink" x-large class="px-5 rounded-lg" dark @click="openMenu('/auth/register')">
+
+            <v-row v-if="$store.state.auth.token">
+              <v-row v-if="nosm" class="ml-1">
+                <v-btn color="pink" x-large class="px-5 rounded-lg" dark @click="openMenu('/kalkulator')">
+                  Hitung Siklus
+                </v-btn>
+              </v-row>
+              <v-btn v-else color="pink" class="px-5 rounded-lg" dark @click="openMenu('/kalkulator')">
+                Hitung Siklus
+              </v-btn>
+            </v-row>
+            <v-row v-else>
+              <v-row v-if="nosm" class="ml-1">
+                <v-btn color="pink" x-large class="px-5 rounded-lg" dark @click="openMenu('/auth/register')">
+                  Daftar Sekarang
+                </v-btn>
+              </v-row>
+              <v-btn v-else color="pink" class="px-5 rounded-lg" dark @click="openMenu('/auth/register')">
                 Daftar Sekarang
               </v-btn>
             </v-row>
-            <v-btn v-else color="pink" class="px-5 rounded-lg" dark @click="openMenu('/auth/register')">
-              Daftar Sekarang
-            </v-btn>
           </v-container>
         </v-col>
         <v-col v-show="nosm">
@@ -178,7 +191,7 @@ export default class IndexPage extends mixins(mix, mixperiod) {
       <h1 class="font-weight-bold" :class="nosm ? 'text-center display-2' : 'display-1'">
         Berita dan informasi yang Anda butuhkan
       </h1>
-      <p class="text--disabled body" :class="nosm ? 'text-center' : ''">
+      <p class="text--disabled body mt-3" :class="nosm ? 'text-center' : ''">
         Berita, Tips dan Trik untuk kamu
       </p>
     </v-container>
