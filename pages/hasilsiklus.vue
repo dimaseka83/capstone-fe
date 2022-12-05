@@ -69,9 +69,15 @@ export default class HasilSiklus extends mixins(mix) {
 
   checkUserLoginOnSimpanHasilSiklus () {
     if (this.$store.state.auth.token) {
-      window.print()
+      this.openMenu('/generate')
     } else {
       this.dialog = true
+    }
+  }
+
+  created () {
+    if (!this.$store.state.calc.haid) {
+      this.openMenu('/kalkulator')
     }
   }
 }
