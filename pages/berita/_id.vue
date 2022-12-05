@@ -36,7 +36,7 @@ export default class Berita extends mixins(mix) {
       <p class="text--disabled">
         {{ moment(berita.createdAt) }}
       </p>
-      <h1 class="font-weight-medium display-2 px-16">
+      <h1 class="font-weight-medium" :class="nosm ? 'display-2 px-16' : ''">
         {{ berita.name }}
       </h1>
       <v-card class="rounded-lg mt-16">

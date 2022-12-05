@@ -66,6 +66,20 @@ export default class HasilSiklus extends mixins(mix) {
     }
     return firstDate + ' - ' + lastDate
   }
+
+  checkUserLoginOnSimpanHasilSiklus () {
+    if (this.$store.state.auth.token) {
+      this.openMenu('/generate')
+    } else {
+      this.dialog = true
+    }
+  }
+
+  created () {
+    if (!this.$store.state.calc.haid) {
+      this.openMenu('/kalkulator')
+    }
+  }
 }
 </script>
 <template>
@@ -263,7 +277,7 @@ export default class HasilSiklus extends mixins(mix) {
             <v-btn outlined color="pink" class="rounded-lg" @click="openMenu('/kalkulator')">
               Tes ulang
             </v-btn>
-            <v-btn color="pink" dark class="rounded-lg" @click="dialog = true">
+            <v-btn color="pink" dark class="rounded-lg" @click="checkUserLoginOnSimpanHasilSiklus">
               Simpan Hasil
             </v-btn>
           </div>
