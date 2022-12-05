@@ -6,19 +6,22 @@ import mix from '~/mixins/mix'
 import mixperiod from '~/mixins/mixperiod'
 
 interface formBantuan {
-  nama: string
+  name: string
   email: string
-  pesan: string
+  deskripsi: string
 }
 
 @Component
 export default class IndexPage extends mixins(mix, mixperiod) {
   @Action('berita/getBerita') getBerita: any
   formBantuan: formBantuan = {
-    nama: '',
+    name: '',
     email: '',
-    pesan: ''
+    deskripsi: ''
   }
+
+  text: string = ''
+  snackbar: boolean = false
 
   faqs: any = [
     {
@@ -49,6 +52,20 @@ export default class IndexPage extends mixins(mix, mixperiod) {
 
   get beritathreeonly () {
     return this.$store.state.berita.berita.slice(0, 3)
+  }
+
+  async postHelps () {
+    const api = 'https://crudberitadanhelper-production.up.railway.app/'
+    const { data } = await this.$axios.post(`${api}help`, this.formBantuan)
+    if (data) {
+      this.text = 'Pesan berhasil dikirim'
+      this.snackbar = true
+      this.formBantuan = {
+        name: '',
+        email: '',
+        deskripsi: ''
+      }
+    }
   }
 }
 
@@ -256,7 +273,7 @@ export default class IndexPage extends mixins(mix, mixperiod) {
             Berita, Tips dan Trik untuk kamu
           </p>
           <v-text-field
-            v-model="formBantuan.nama"
+            v-model="formBantuan.name"
             label="Nama Lengkap"
             outlined
           />
@@ -266,11 +283,11 @@ export default class IndexPage extends mixins(mix, mixperiod) {
             outlined
           />
           <v-textarea
-            v-model="formBantuan.pesan"
+            v-model="formBantuan.deskripsi"
             label="Pesan"
             outlined
           />
-          <v-btn color="pink" large class="px-5 rounded-lg" dark>
+          <v-btn color="pink" large class="px-5 rounded-lg" dark @click="postHelps">
             Kirim
           </v-btn>
         </v-col>
@@ -279,5 +296,13 @@ export default class IndexPage extends mixins(mix, mixperiod) {
         </v-col>
       </v-row>
     </v-container>
+    <v-snackbar v-model="snackbar">
+      {{ text }}
+      <template #action="{ attrs }">
+        <v-btn text color="pink" v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
