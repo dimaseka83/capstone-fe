@@ -4,7 +4,9 @@ import { Action } from 'vuex-class'
 import mix from '~/mixins/mix'
 import { VForm } from 'types'
 
-@Component
+@Component({
+  layout: 'admin'
+})
 export default class AdminBerita extends mixins(mix) {
   @Ref('formBerita') readonly forms!: VForm
   @Action('berita/getBerita') getBerita: any

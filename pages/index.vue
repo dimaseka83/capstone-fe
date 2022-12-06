@@ -1,9 +1,10 @@
 <!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script lang="ts">
-import { mixins, Component } from 'nuxt-property-decorator'
+import { mixins, Component, Ref } from 'nuxt-property-decorator'
 import { Action } from 'vuex-class'
 import mix from '~/mixins/mix'
 import mixperiod from '~/mixins/mixperiod'
+import { VForm } from 'types'
 
 interface formBantuan {
   name: string
@@ -13,11 +14,27 @@ interface formBantuan {
 
 @Component
 export default class IndexPage extends mixins(mix, mixperiod) {
+  @Ref('formBantuan') readonly form!: VForm
   @Action('berita/getBerita') getBerita: any
   formBantuan: formBantuan = {
     name: '',
     email: '',
     deskripsi: ''
+  }
+
+  rulesFormBantuan: object = {
+    name: [
+      (v: string) => !!v || 'Nama tidak boleh kosong',
+      (v: string) => (v && v.length <= 20) || 'Nama tidak boleh lebih dari 20 karakter'
+    ],
+    email: [
+      (v: string) => !!v || 'Email tidak boleh kosong',
+      (v: string) => /.+@.+\..+/.test(v) || 'Email harus valid'
+    ],
+    deskripsi: [
+      (v: string) => !!v || 'Deskripsi tidak boleh kosong',
+      (v: string) => (v && v.length <= 100) || 'Deskripsi tidak boleh lebih dari 100 karakter'
+    ]
   }
 
   text: string = ''
@@ -55,15 +72,18 @@ export default class IndexPage extends mixins(mix, mixperiod) {
   }
 
   async postHelps () {
-    const api = 'https://crudberitadanhelper-production.up.railway.app/'
-    const { data } = await this.$axios.post(`${api}help`, this.formBantuan)
-    if (data) {
-      this.text = 'Pesan berhasil dikirim'
-      this.snackbar = true
-      this.formBantuan = {
-        name: '',
-        email: '',
-        deskripsi: ''
+    if (this.form.validate()) {
+      const api = 'https://crudberitadanhelper-production.up.railway.app/'
+      const { data } = await this.$axios.post(`${api}help`, this.formBantuan)
+      if (data) {
+        this.text = 'Pesan berhasil dikirim'
+        this.snackbar = true
+        this.form.reset()
+        this.formBantuan = {
+          name: '',
+          email: '',
+          deskripsi: ''
+        }
       }
     }
   }
@@ -285,24 +305,29 @@ export default class IndexPage extends mixins(mix, mixperiod) {
           <p class="text--disabled body mt-5 mb-16">
             Berita, Tips dan Trik untuk kamu
           </p>
-          <v-text-field
-            v-model="formBantuan.name"
-            label="Nama Lengkap"
-            outlined
-          />
-          <v-text-field
-            v-model="formBantuan.email"
-            label="Email"
-            outlined
-          />
-          <v-textarea
-            v-model="formBantuan.deskripsi"
-            label="Pesan"
-            outlined
-          />
-          <v-btn color="pink" large class="px-5 rounded-lg" dark @click="postHelps">
-            Kirim
-          </v-btn>
+          <v-form ref="formBantuan" lazy-validation>
+            <v-text-field
+              v-model="formBantuan.name"
+              label="Nama Lengkap"
+              outlined
+              :rules="rulesFormBantuan.name"
+            />
+            <v-text-field
+              v-model="formBantuan.email"
+              label="Email"
+              outlined
+              :rules="rulesFormBantuan.email"
+            />
+            <v-textarea
+              v-model="formBantuan.deskripsi"
+              label="Pesan"
+              outlined
+              :rules="rulesFormBantuan.deskripsi"
+            />
+            <v-btn color="pink" large class="px-5 rounded-lg" dark @click="postHelps">
+              Kirim
+            </v-btn>
+          </v-form>
         </v-col>
         <v-col v-show="nosm">
           <img src="~/assets/message-home.svg">
