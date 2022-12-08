@@ -38,10 +38,6 @@ export default class HasilSiklus extends mixins(mix) {
     return moment(date).format('MMMM')
   }
 
-  moment (date: string) {
-    return moment(date)
-  }
-
   calcBetweenDates (start: string, end: string) {
     const startDate = new Date(start)
     const endDate = new Date(end)

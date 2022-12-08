@@ -158,15 +158,17 @@ export default class IndexPage extends mixins(mix, mixperiod) {
               min-width="auto"
             >
               <template #activator="{ on, attrs }">
-                <v-text-field
-                  v-model="date"
-                  label="Date"
-                  hint="MM/DD/YYYY format"
-                  persistent-hint
-                  prepend-icon="mdi-calendar"
+                <v-btn
+                  x-large
+                  class="px-16 rounded-lg"
+                  color="blue"
+                  dark
                   v-bind="attrs"
                   v-on="on"
-                />
+                >
+                  <v-icon>mdi-calendar-month-outline</v-icon>
+                  {{ moment(date) }}
+                </v-btn>
               </template>
               <v-date-picker
                 v-model="date"

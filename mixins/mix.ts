@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import moment from 'moment'
 import { Component } from 'nuxt-property-decorator'
 
 @Component
@@ -35,6 +36,10 @@ export default class Mix extends Vue {
 
   openMenu (menu: string) {
     this.$router.push({ path: menu })
+  }
+
+  moment (date: string) {
+    return moment(date).lang('id').format('LL')
   }
 
   years: number = new Date().getFullYear()
