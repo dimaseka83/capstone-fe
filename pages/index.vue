@@ -271,30 +271,31 @@ export default class IndexPage extends mixins(mix, mixperiod) {
         </v-btn>
       </div>
     </v-container>
-    <v-container class="my-16">
-      <h1 class="font-weight-bold display-2">
-        FAQ - Yang sering ditanyakan
-      </h1>
-      <p class="text--disabled body mt-5">
-        temukan Jawaban kamu disini
-      </p>
-      <v-row justify="center" class="mt-10">
-        <v-expansion-panels multiple>
-          <v-expansion-panel
-            v-for="(faq, idx) in faqs"
-            :key="idx"
-          >
-            <v-expansion-panel-header class="font-weight-bold headline">
-              {{ faq.pertanyaan }}
-            </v-expansion-panel-header>
-            <v-expansion-panel-content class="text--disabled text-capitalize">
-              {{ faq.jawaban }}
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </v-row>
-    </v-container>
-
+    <v-content class="bg-pink">
+      <v-container class="my-16">
+        <h1 class="font-weight-bold display-2">
+          FAQ - Yang sering ditanyakan
+        </h1>
+        <p class="text--disabled body mt-5">
+          temukan Jawaban kamu disini
+        </p>
+        <v-row justify="center" class="mt-10">
+          <v-expansion-panels multiple>
+            <v-expansion-panel
+              v-for="(faq, idx) in faqs"
+              :key="idx"
+            >
+              <v-expansion-panel-header class="font-weight-bold headline">
+                {{ faq.pertanyaan }}
+              </v-expansion-panel-header>
+              <v-expansion-panel-content class="text--disabled text-capitalize">
+                {{ faq.jawaban }}
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-row>
+      </v-container>
+    </v-content>
     <v-container class="fill-height my-16">
       <v-row>
         <v-col v-show="sm">
