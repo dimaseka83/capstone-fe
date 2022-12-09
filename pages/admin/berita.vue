@@ -56,6 +56,16 @@ export default class AdminBerita extends mixins(mix) {
     this.initialize()
   }
 
+  tambah () {
+    this.form = {
+      title: '',
+      deskripsi: '',
+      file: ''
+    }
+    this.titleForm = 'Tambah Berita'
+    this.dialog = true
+  }
+
   initialize () {
     this.loading = true
     this.getBerita()
@@ -117,6 +127,7 @@ export default class AdminBerita extends mixins(mix) {
               this.initialize()
               this.loading = false
               this.dialog = false
+              this.forms.reset()
             })
           }
         } else {
@@ -136,6 +147,7 @@ export default class AdminBerita extends mixins(mix) {
             this.initialize()
             this.loading = false
             this.dialog = false
+            this.forms.reset()
           })
         }
       } catch (error) {
@@ -198,7 +210,7 @@ export default class AdminBerita extends mixins(mix) {
                         class="mb-2"
                         v-bind="attrs"
                         v-on="on"
-                        @click="titleForm = 'Tambah Berita'"
+                        @click="tambah"
                       >
                         Tambah Berita
                       </v-btn>

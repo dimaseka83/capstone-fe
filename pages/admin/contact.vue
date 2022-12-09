@@ -84,6 +84,16 @@ export default class AdminBerita extends mixins(mix) {
     }
   }
 
+  tambah () {
+    this.form = {
+      name: '',
+      email: '',
+      deskripsi: ''
+    }
+    this.dialog = true
+    this.titleForm = 'Tambah Contact Us'
+  }
+
   edit (item: any) {
     this.titleForm = 'Edit Contact Us'
     this.form = item
@@ -99,11 +109,13 @@ export default class AdminBerita extends mixins(mix) {
           this.initialize()
           this.dialog = false
           this.loading = false
+          this.forms.reset()
         } else {
           const { data } = await this.$axios.patch(`${this.api}help/${this.form.id}`, this.form)
           this.initialize()
           this.dialog = false
           this.loading = false
+          this.forms.reset()
         }
       } catch (error) {
         this.loading = false
@@ -159,7 +171,7 @@ export default class AdminBerita extends mixins(mix) {
                         class="mb-2"
                         v-bind="attrs"
                         v-on="on"
-                        @click="titleForm = 'Tambah Contact Us'"
+                        @click="tambah"
                       >
                         Tambah Contact Us
                       </v-btn>
