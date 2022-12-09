@@ -95,12 +95,12 @@ export default class AdminBerita extends mixins(mix) {
   }
 
   async save () {
-    const fileMustJpg = this.form.file.name.split('.').pop()
     if (this.forms.validate()) {
-      if (fileMustJpg === 'jpg' || fileMustJpg === 'jpeg' || fileMustJpg === 'png') {
-        this.loading = true
-        try {
-          if (this.titleForm === 'Tambah Berita') {
+      this.loading = true
+      try {
+        if (this.titleForm === 'Tambah Berita') {
+          const fileMustJpg = this.form.file.name.split('.').pop()
+          if (fileMustJpg === 'jpg' || fileMustJpg === 'jpeg' || fileMustJpg === 'png') {
             const formData = new FormData()
             formData.append('title', this.form.title)
             formData.append('deskripsi', this.form.deskripsi)
@@ -118,34 +118,34 @@ export default class AdminBerita extends mixins(mix) {
               this.loading = false
               this.dialog = false
             })
-          } else {
-            const formData = new FormData()
-            formData.append('name', this.form.title)
-            formData.append('deskripsi', this.form.deskripsi)
-            formData.append('file', this.form.file)
-            await this.$axios({
-              method: 'put',
-              url: this.api + 'products/' + this.form.id,
-              data: formData,
-              headers: {
-                'Content-Type': 'multipart/form-data',
-                'Allow-Control-Allow-Origin': '*'
-              }
-            }).then((res: any) => {
-              this.initialize()
-              this.loading = false
-              this.dialog = false
-            })
           }
-        } catch (error) {
-          this.loading = false
-          this.msg = 'Gagal menyimpan data'
-          this.snackbar = true
+        } else {
+          const formData = new FormData()
+          formData.append('name', this.form.title)
+          formData.append('deskripsi', this.form.deskripsi)
+          formData.append('file', this.form.file)
+          await this.$axios({
+            method: 'patch',
+            url: this.api + 'products/' + this.form.id,
+            data: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Allow-Control-Allow-Origin': '*'
+            }
+          }).then((res: any) => {
+            this.initialize()
+            this.loading = false
+            this.dialog = false
+          })
         }
-      } else {
-        this.msg = 'File harus jpg atau png'
+      } catch (error) {
+        this.loading = false
+        this.msg = 'Gagal menyimpan data'
         this.snackbar = true
       }
+    } else {
+      this.msg = 'File harus jpg atau png'
+      this.snackbar = true
     }
   }
 }
