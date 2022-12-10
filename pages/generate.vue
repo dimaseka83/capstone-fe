@@ -12,10 +12,10 @@ export default class Generate extends Vue {
       this.$router.push('/kalkulator')
     } else {
       window.print()
-      window.addEventListener('afterprint', () => {
-        this.$router.push('/hasilsiklus')
-      })
     }
+    window.addEventListener('afterprint', () => {
+      this.$router.push('/hasilsiklus')
+    })
   }
 
   moment (date: string) {
@@ -25,6 +25,30 @@ export default class Generate extends Vue {
   getDifferenceDays (date1: string, date2: string) {
     const diffTime = Math.abs(new Date(date2).getTime() - new Date(date1).getTime())
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  }
+
+  function () {
+    const beforePrint = function () {
+      console.log('Functionality to run before printing.')
+    }
+
+    const afterPrint = function () {
+      console.log('Functionality to run after printing')
+    }
+
+    if (window.matchMedia) {
+      const mediaQueryList = window.matchMedia('print')
+      mediaQueryList.addListener(function (mql) {
+        if (mql.matches) {
+          beforePrint()
+        } else {
+          afterPrint()
+        }
+      })
+    }
+
+    window.onbeforeprint = beforePrint
+    window.onafterprint = afterPrint
   }
 }
 </script>
