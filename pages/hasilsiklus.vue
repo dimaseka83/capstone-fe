@@ -274,7 +274,7 @@ export default class HasilSiklus extends mixins(mix) {
               Tes ulang
             </v-btn>
             <v-btn color="pink" dark class="rounded-lg" @click="checkUserLoginOnSimpanHasilSiklus">
-              Simpan Hasil
+              Cetak Hasil
             </v-btn>
           </div>
         </v-col>
@@ -366,7 +366,7 @@ export default class HasilSiklus extends mixins(mix) {
       <v-card class="pa-5">
         <v-card-text>
           <p class="font-weight-bold display-1 black--text mb-10">
-            Daftar terlebih dahulu untuk menyimpan hasil siklus haid
+            Daftar terlebih dahulu untuk mencetak hasil siklus haid
           </p>
           <v-btn outlined color="pink" class="rounded-lg" @click="dialog = false">
             Batal

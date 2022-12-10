@@ -12,6 +12,9 @@ export default class Generate extends Vue {
       this.$router.push('/kalkulator')
     } else {
       window.print()
+      window.addEventListener('afterprint', () => {
+        this.$router.push('/hasilsiklus')
+      })
     }
   }
 
