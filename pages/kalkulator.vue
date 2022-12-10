@@ -71,6 +71,9 @@ export default class Kalkulator extends mixins(mix, mixperiod) {
         </v-col>
         <v-col :cols="nosm ? '4' : '12'">
           <p>2. Berapa lama siklus haid anda (Hari)</p>
+          <div class="d-flex justify-center">
+              <span class="font-weight-bold">{{ siklusCount }} Hari</span>
+            </div>
           <v-slider
             v-model="siklusCount"
             color="pink"
@@ -86,6 +89,9 @@ export default class Kalkulator extends mixins(mix, mixperiod) {
         </v-col>
         <v-col :cols="nosm ? '4' : '12'">
           <p>3. Berapa lama Anda Haid (Hari)</p>
+          <div class="d-flex justify-center">
+              <span class="font-weight-bold">{{ haidCount }} Hari</span>
+            </div>
           <v-slider
             v-model="haidCount"
             color="pink"
