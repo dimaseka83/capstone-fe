@@ -10,7 +10,9 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { name: 'name', content: 'dicoding:email' },
+      { name: 'content', content: 'f111x0144@dicoding.org' },
+      { hid: 'description', name: 'description', content: 'Sikmen Merupakan Aplikasi Kalkulator Menstruasi' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
