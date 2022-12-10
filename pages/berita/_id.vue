@@ -32,22 +32,35 @@ export default class Berita extends mixins(mix) {
 </script>
 <template>
   <v-app>
-    <v-container class="my-16 text-center">
-      <p class="text--disabled">
-        {{ moment(berita.createdAt) }}
-      </p>
-      <h1 class="font-weight-medium" :class="nosm ? 'display-2 px-16' : ''">
-        {{ berita.name }}
-      </h1>
-      <v-card class="rounded-lg mt-16">
-        <v-img
-          :src="berita.url"
-          :height="nosm ? height-100 : height"
-        />
-      </v-card>
-    </v-container>
-    <v-container>
-      <div v-html="berita.deskripsi" />
+    <v-container class="my-16">
+      <v-row>
+        <v-col :cols="nosm ? '8' : '10'">
+          <h1 class="font-weight-medium" :class="nosm ? 'display-2' : ''">
+            {{ berita.name }}
+          </h1>
+          <v-card class="rounded-lg my-16">
+            <v-img
+              :src="berita.url"
+              :height="nosm ? height-100 : height"
+            />
+          </v-card>
+          <div v-html="berita.deskripsi" />
+        </v-col>
+        <v-col :cols="nosm ? '4' : '12'">
+          <p class="text--disabled">
+            <v-avatar
+              size="40"
+              class="mr-4"
+            >
+              <img
+                alt="Admin"
+                src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
+              >
+            </v-avatar>
+            Ditulis oleh Admin Sikmen | {{ moment(berita.createdAt) }}
+          </p>
+        </v-col>
+      </v-row>
     </v-container>
   </v-app>
 </template>

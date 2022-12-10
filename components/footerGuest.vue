@@ -48,12 +48,12 @@ export default class footerGuest extends mixins(mix) {
     {
       title: 'Kalkulator',
       icon: 'mdi-login',
-      to: '/login'
+      to: '/kalkulator'
     },
     {
       title: 'Berita',
       icon: 'mdi-account-plus',
-      to: '/register'
+      to: '/berita'
     },
     {
       title: 'Masuk',
@@ -124,13 +124,6 @@ export default class footerGuest extends mixins(mix) {
           <p class="title text--disabled">
             Sikmen adalah sistem perhitungan siklus mentruasi berbasis WEB
           </p>
-
-          <p class="title font-weight-bold mt-10">
-            Follow Social Media Kami
-          </p>
-          <v-btn v-for="(sm, i) in socialMedia" :key="i" icon :href="sm.to" target="_blank">
-            <v-icon>{{ sm.icon }}</v-icon>
-          </v-btn>
         </v-col>
         <v-col :cols="nosm ? '6' : '12'" :class="nosm ? 'ml-16 pl-16' : ''">
           <v-row>
@@ -138,7 +131,7 @@ export default class footerGuest extends mixins(mix) {
               <p class="headline font-weight-bold">
                 Halaman
               </p>
-              <p v-for="(menu, i) in menus" :key="i" class="title text--disabled" @click="openMenu(menu.to)">
+                <p v-for="(menu, i) in menus" :key="i" class="title hover text--disabled" @click="openMenu(menu.to)">
                 {{ menu.title }}
               </p>
             </v-col>
@@ -146,7 +139,7 @@ export default class footerGuest extends mixins(mix) {
               <p class="headline font-weight-bold">
                 Lebih Dekat
               </p>
-              <p v-for="(more, i) in moreMe" :key="i" class="title text--disabled" @click="openMenu(more.to)">
+              <p v-for="(more, i) in moreMe" :key="i" class="title hover text--disabled" @click="openMenu(more.to)">
                 {{ more.title }}
               </p>
             </v-col>
@@ -154,7 +147,7 @@ export default class footerGuest extends mixins(mix) {
               <p class="headline font-weight-bold">
                 Kontak Kami
               </p>
-              <p v-for="(contact, i) in contactMe" :key="i" class="title text--disabled" @click="openMenu(contact.to)">
+              <p v-for="(contact, i) in contactMe" :key="i" class="title hover text--disabled" @click="openMenu(contact.to)">
                 {{ contact.title }}
               </p>
             </v-col>

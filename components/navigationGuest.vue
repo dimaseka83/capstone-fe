@@ -53,6 +53,12 @@ export default class NavigationGuest extends mixins(Mix) {
     this.$router.push('/')
     localStorage.removeItem('user')
   }
+
+  disabledButton (link: string) {
+    if (link === this.$route.path) {
+      return true
+    }
+  }
 }
 </script>
 <template>
@@ -63,8 +69,13 @@ export default class NavigationGuest extends mixins(Mix) {
         <img src="~/assets/logo.png" width="100">
       </v-toolbar-title>
 
-      <div v-for="(men, i) in menu" v-show="nosm" :key="i">
-        <v-btn v-if="showNotLastMenu(i)" text @click="openMenu(men.to)">
+      <div v-for="(men, i) in menu" v-show="nosm" :key="i+'menu'" class="pl-5">
+        <v-btn
+          v-if="showNotLastMenu(i)"
+          :disabled="disabledButton(men.to)"
+          text
+          @click="openMenu(men.to)"
+        >
           {{ men.title }}
         </v-btn>
       </div>
@@ -97,15 +108,6 @@ export default class NavigationGuest extends mixins(Mix) {
               </v-list-item>
             </v-list>
           </v-menu>
-          <v-btn
-            depressed
-            color="pink"
-            dark
-            class="rounded-lg"
-            @click="openMenu('/kalkulator')"
-          >
-            Hitung Siklus
-          </v-btn>
         </div>
         <div v-else>
           <v-btn text @click="openMenu(menu[3].to)">
@@ -129,7 +131,8 @@ export default class NavigationGuest extends mixins(Mix) {
             <img src="~/assets/logo.png" width="100" class="ml-5">
             <v-list-item
               v-for="(men, i) in menuLogin"
-              :key="i"
+              :key="i+'menuLogin'"
+              :disabled="disabledButton(men.to)"
               @click="openMenu(men.to)"
             >
               <v-list-item-content>
@@ -171,15 +174,6 @@ export default class NavigationGuest extends mixins(Mix) {
                   </v-list-item>
                 </v-list>
               </v-menu>
-              <v-btn
-                depressed
-                color="pink"
-                dark
-                class="rounded-lg mt-4"
-                @click="openMenu('/kalkulator')"
-              >
-                Hitung Siklus
-              </v-btn>
             </div>
           </v-list-item-group>
         </v-list>
@@ -187,3 +181,13 @@ export default class NavigationGuest extends mixins(Mix) {
     </v-app-bar>
   </div>
 </template>
+<style scoped>
+button.v-btn[disabled] {
+  background-color: #E91E63 !important;
+  color: white !important;
+}
+.v-list-item--disabled {
+  background-color: #E91E63 !important;
+  color: white !important;
+}
+</style>

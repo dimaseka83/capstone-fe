@@ -52,6 +52,10 @@ export default class IndexPage extends mixins(mix, mixperiod) {
     {
       pertanyaan: 'Apakah hasil Siklus yang telah dihitung akurat?',
       jawaban: 'kita sudah melakukan beberapa survey ke beberapa wanita yang mengalami siklus menstruasi, dan 9 dari 10 wanita menyebutkan bahwasanya perhitungannya sangat akurat'
+    },
+    {
+      pertanyaan: 'Bagaimana jika saya lupa password saya?',
+      jawaban: 'Silahkan mengisi form bantuan dengan pesan lupa password beserta email, no hp dan tgl lahir. jika sudah password akan di kirim melalui email tersebut.'
     }
   ]
 
@@ -180,6 +184,9 @@ export default class IndexPage extends mixins(mix, mixperiod) {
           </v-col>
           <v-col :cols="nosm ? '4' : '12'">
             <p>2. Berapa lama siklus haid anda (Hari)</p>
+            <div class="d-flex justify-center">
+              <span class="font-weight-bold">{{ siklusCount }} Hari</span>
+            </div>
             <v-slider
               v-model="siklusCount"
               color="pink"
@@ -195,6 +202,9 @@ export default class IndexPage extends mixins(mix, mixperiod) {
           </v-col>
           <v-col :cols="nosm ? '4' : '12'">
             <p>3. Berapa lama Anda Haid (Hari)</p>
+            <div class="d-flex justify-center">
+              <span class="font-weight-bold">{{ haidCount }} Hari</span>
+            </div>
             <v-slider
               v-model="haidCount"
               color="pink"
