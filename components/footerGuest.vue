@@ -97,21 +97,15 @@ export default class footerGuest extends mixins(mix) {
 
   contactMe: Array<menuRules> = [
     {
-      title: '0812-3456-7890',
-      icon: 'mdi-login',
-      to: '#'
-    },
-    {
-      title: 'halo@sikmen',
+      title: 'f482x1005@dicoding.org (Muhammad Haikal Bintang)',
       icon: 'mdi-home',
-      to: '#'
-    },
-    {
-      title: 'Jakarta Selatan',
-      icon: 'mdi-home',
-      to: '#'
+      to: 'f482x1005@dicoding.org'
     }
   ]
+
+  mailto (email: string) {
+    window.location.assign(`mailto:${email}`)
+  }
 }
 </script>
 
@@ -131,24 +125,19 @@ export default class footerGuest extends mixins(mix) {
               <p class="headline font-weight-bold">
                 Halaman
               </p>
-                <p v-for="(menu, i) in menus" :key="i" class="title hover text--disabled" @click="openMenu(menu.to)">
+              <p v-for="(menu, i) in menus" :key="i" class="title hover text--disabled" @click="openMenu(menu.to)">
                 {{ menu.title }}
-              </p>
-            </v-col>
-            <v-col :cols="nosm ? '' : '6'">
-              <p class="headline font-weight-bold">
-                Lebih Dekat
-              </p>
-              <p v-for="(more, i) in moreMe" :key="i" class="title hover text--disabled" @click="openMenu(more.to)">
-                {{ more.title }}
               </p>
             </v-col>
             <v-col :cols="nosm ? '' : '6'">
               <p class="headline font-weight-bold">
                 Kontak Kami
               </p>
-              <p v-for="(contact, i) in contactMe" :key="i" class="title hover text--disabled" @click="openMenu(contact.to)">
+              <p v-for="(contact, i) in contactMe" :key="i" class="title hover text--disabled" @click="mailto(contact.to)">
                 {{ contact.title }}
+              </p>
+              <p class="title hover text--disabled">
+                Indonesia
               </p>
             </v-col>
           </v-row>
