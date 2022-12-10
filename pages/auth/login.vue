@@ -94,7 +94,7 @@ export default class Login extends mixins(mix) {
         :rules="rules.password"
         class="mt-5"
       />
-      <div class="d-flex flex-row-reverse">
+      <!-- <div class="d-flex flex-row-reverse">
         <v-btn
           text
           color="pink"
@@ -103,7 +103,7 @@ export default class Login extends mixins(mix) {
         >
           Lupa password?
         </v-btn>
-      </div>
+      </div> -->
       <v-btn
         large
         dark
