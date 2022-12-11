@@ -11,7 +11,7 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'name', content: 'dicoding:email' },
-      { name: 'content', content: 'f111x0144@dicoding.org' },
+      { name: 'content', content: 'dimaseka83@gmail.com' },
       { hid: 'description', name: 'description', content: 'Sikmen Merupakan Aplikasi Kalkulator Menstruasi' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
