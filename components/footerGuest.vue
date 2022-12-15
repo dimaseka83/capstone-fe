@@ -81,12 +81,12 @@ export default class footerGuest extends mixins(mix) {
     {
       title: 'Syarat & Ketentuan',
       icon: 'mdi-account-plus',
-      to: '/register'
+      to: '/auth/register'
     },
     {
       title: 'Kebijakan Privasi',
       icon: 'mdi-login',
-      to: '/login'
+      to: '/auth/login'
     },
     {
       title: 'Hubungi Kami',
