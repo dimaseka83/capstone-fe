@@ -15,7 +15,7 @@ export default class AdminBerita extends mixins(mix) {
   snackbar: boolean = false
 
   // Api Berita
-  api: string = 'https://crudapi-production.up.railway.app/'
+  api: string = 'https://crudberitadanhelper-production.up.railway.app/'
   loading: boolean = false
 
   toolbar: any = ['bold', 'italic', 'underline', 'strike', '|', 'bulletList', 'orderedList', 'h1', 'h2', 'h3', 'p']

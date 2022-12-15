@@ -12,7 +12,7 @@ export const mutations = {
 
 export const actions = {
   async getBerita ({ commit }: { commit: any }) {
-    const { data } = await axios.get('https://crudapi-production.up.railway.app/products')
+    const { data } = await axios.get('https://crudberitadanhelper-production.up.railway.app/')
     const urutkanTerbaru = data.sort((a: { createdAt: string }, b: { createdAt: string }) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     }
