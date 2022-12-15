@@ -58,12 +58,12 @@ export default class footerGuest extends mixins(mix) {
     {
       title: 'Masuk',
       icon: 'mdi-login',
-      to: '/login'
+      to: '/auth/login'
     },
     {
       title: 'Registrasi',
       icon: 'mdi-account-plus',
-      to: '/register'
+      to: '/auth/register'
     }
   ]
 
