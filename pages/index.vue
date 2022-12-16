@@ -85,13 +85,13 @@ export default class IndexPage extends mixins(mix, mixperiod) {
       if (data) {
         this.text = 'Pesan berhasil dikirim'
         this.snackbar = true
-        this.loadingBantuan = false
         this.form.reset()
         this.formBantuan = {
           name: '',
           email: '',
           deskripsi: ''
         }
+        this.loadingBantuan = false
       }
     }
   }
