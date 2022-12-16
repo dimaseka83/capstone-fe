@@ -22,6 +22,8 @@ export default class IndexPage extends mixins(mix, mixperiod) {
     deskripsi: ''
   }
 
+  loadingBantuan: boolean = false
+
   rulesFormBantuan: object = {
     name: [
       (v: string) => !!v || 'Nama tidak boleh kosong',
@@ -78,10 +80,12 @@ export default class IndexPage extends mixins(mix, mixperiod) {
   async postHelps () {
     if (this.form.validate()) {
       const api = 'https://crudberitadanhelper-production.up.railway.app/'
+      this.loadingBantuan = true
       const { data } = await this.$axios.post(`${api}help`, this.formBantuan)
       if (data) {
         this.text = 'Pesan berhasil dikirim'
         this.snackbar = true
+        this.loadingBantuan = false
         this.form.reset()
         this.formBantuan = {
           name: '',
@@ -337,7 +341,17 @@ export default class IndexPage extends mixins(mix, mixperiod) {
               outlined
               :rules="rulesFormBantuan.deskripsi"
             />
-            <v-btn color="pink" large class="px-5 rounded-lg" dark @click="postHelps">
+            <v-btn
+              color="pink"
+              large
+              class="px-5 rounded-lg"
+              dark
+              :loading="loadingBantuan"
+              @click="postHelps"
+            >
+              <template #loader>
+                <v-progress-circular indeterminate size="20" color="white" />
+              </template>
               Kirim
             </v-btn>
           </v-form>
