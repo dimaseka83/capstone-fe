@@ -34,8 +34,8 @@ export default class IndexPage extends mixins(mix, mixperiod) {
       (v: string) => /.+@.+\..+/.test(v) || 'Email harus valid'
     ],
     deskripsi: [
-      (v: string) => !!v || 'Deskripsi tidak boleh kosong',
-      (v: string) => (v && v.length <= 100) || 'Deskripsi tidak boleh lebih dari 100 karakter'
+      (v: string) => !!v || 'Pesan tidak boleh kosong',
+      (v: string) => (v && v.length <= 100) || 'Pesan tidak boleh lebih dari 100 karakter'
     ]
   }
 
