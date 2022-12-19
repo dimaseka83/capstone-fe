@@ -93,6 +93,7 @@ export default class MixPeriod extends Vue {
       }
       const haid = this.haidCount
       const siklus = this.siklusCount
+      this.loading = false
       this.getPerhitungan(events)
       this.getHaid({ haid, siklus })
       this.openMenu('/hasilsiklus')
