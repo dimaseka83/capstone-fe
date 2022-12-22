@@ -35,7 +35,7 @@ export default class Berita extends mixins(mix) {
     <v-container class="my-16">
       <v-row>
         <v-col :cols="nosm ? '8' : '10'">
-          <h1 class="font-weight-medium" :class="nosm ? 'display-2' : ''">
+          <h1 class="font-weight-medium text-center" :class="nosm ? 'display-2' : ''">
             {{ berita.name }}
           </h1>
           <v-card class="rounded-lg my-16">
